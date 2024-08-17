@@ -46,7 +46,7 @@ There are 2 ways to upload the `.bin`. Web Browser is the easier way.
 5. `esptool.exe --chip esp8266 --port COM4 --baud 115200 write_flash 0x00000 DuinoI2C_ESP.bin`. Replace COM port and .bin path to your actual one
 
 ## Configure DuinoI2C_ESP
-After flashing and powering on your ESP8266 for the first time, it will create a soft access point and launch a WiFi Manager web interface, allowing the user to configure it for proper operation.
+After flashing and powering on your ESP8266 for the first time, it will create a soft access point and launch a WiFi Manager web interface, allowing the user to configure it for proper operation. Note that ESP8266 will only work with 2.4GHz WiFi so the WiFi router may need to enable 2.4GHz if not done so already.
 
 ### Connecting to the WiFi Manager
 1. Connect your computer or phone to the WiFi network hosted by the ESP8266. You may connect the WiFi network `DuinoI2C_ESP` and key in password as `password` manually or use QR scanner to skip the typing if OLED is connected to the ESP. Or just scan the QR below in this page.
@@ -80,7 +80,7 @@ DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ES
 5. Click `Update Firmware` and wait around 20s
 6. The ESP should restart itself and start working. If it shows WiFi Manager screen, just repeat the WiFi setup step as before
 
-<img src="assets/ui03.png" alt="ui03" width="20%"> --> <img src="assets/ui03.png" alt="ui04" width="20%"> --> <img src="assets/ui05.png" alt="ui05" width="50%"> --> <img src="assets/ui06.png" alt="ui06" width="20%"> --> <img src="assets/ui07.png" alt="ui07" width="50%">
+<img src="assets/ui03.png" alt="ui03" width="20%"> --> <img src="assets/ui04.png" alt="ui04" width="20%"> --> <img src="assets/ui05.png" alt="ui05" width="50%"> --> <img src="assets/ui06.png" alt="ui06" width="20%"> --> <img src="assets/ui07.png" alt="ui07" width="50%">
 
 ### ESP01 OTA (1MB)
 1. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.235:54321/firmware` *Replace the IP with your ESP IP*
@@ -92,4 +92,19 @@ DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ES
 7. Select `DuinoI2C_ESP.ino.esp01.ota.bin.gz`
 8. Repeat step 5. The ESP should start working again.
 
-*to be continued...*
+## OLED (Optional)
+Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto detected at address 0x3C. If the mining rig setup is using logic-level-shifter, it is recommended to connect the OLED to 3.3V side for both VCC and I2C SDA/SCL.
+
+For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini, you may connect them by refering to the table below. Take note that `Serial` will be disabled in this use case.
+### Connection Pinout
+|| ESP8266 || OLED |
+|:-:| :----: | :----: |:-----: |
+|| TX | <---> | Vcc |
+|| RX | <---> | GND |
+|`SCL`|D1 (GPIO5) | <---> | SCL |
+|`SDA`|D2 (GPIO4) | <---> | SDA |
+
+<img src="assets/wemos_txrxpwr.jpg" alt="wemos_txrxpwr" width="30%">  Image courtesy from jpx13
+
+## Unlock Key
+*to be continued*
