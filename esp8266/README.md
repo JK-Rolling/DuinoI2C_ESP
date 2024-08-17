@@ -17,6 +17,8 @@ This project currently supports the following ESP8266 devices:
 1. Navigate to the [esp8266](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266) section of this repository.
 2. Download the latest `.bin` file to your local machine.
 
+*Note: If you want OTA for ESP01, use `DuinoI2C_ESP.ino.esp01.ota.bin.gz`*
+
 ### Uploading the `.bin` File to ESP8266
 There are 2 ways to upload the `.bin`. Web Browser is the easier way.
 
@@ -47,10 +49,47 @@ There are 2 ways to upload the `.bin`. Web Browser is the easier way.
 After flashing and powering on your ESP8266 for the first time, it will create a soft access point and launch a WiFi Manager web interface, allowing the user to configure it for proper operation.
 
 ### Connecting to the WiFi Manager
-1. Connect your computer or phone to the WiFi network hosted by the ESP8266. You may select the WiFi network manually or use QR scanner if OLED is connected to the ESP8266.
-2. Open a web browser and navigate to http://192.168.4.1.
+1. Connect your computer or phone to the WiFi network hosted by the ESP8266. You may connect the WiFi network `DuinoI2C_ESP` and key in password as `password` manually or use QR scanner to skip the typing if OLED is connected to the ESP. Or just scan the QR below in this page.
+2. Open a web browser and navigate to http://192.168.4.1 by typing in the browser or use QR scanner to skip the typing if OLED is connected to the ESP.
 3. The web interface will allow you to configure your WiFi credentials, Duino username and mining key, and optionally the firmware OTA credential.
 4. Click on Save button to store the inputs in ESP8266. The ESP should restart automatically and start working!
 
+<img src="assets/ui10.jpg" alt="ui10" width="20%"> --> <img src="assets/ui11.jpg" alt="ui11" width="20%"> --> <img src="assets/ui12.jpg" alt="ui12" width="20%"> --> <img src="assets/ui08.jpg" alt="ui08" width="20%"> --> <img src="assets/ui09.jpg" alt="ui09" width="20%"> --> <img src="assets/ui13.jpg" alt="ui13" width="20%"> --> <img src="assets/ui14.jpg" alt="ui14" width="20%">
+
 ## Control and Monitor DuinoI2C_ESP
-TODO
+DuinoI2C_ESP allow user to access the following
+* Webserial
+* Firmware WiFi Update (FWU or OTA) with security
+* Onboard LED power
+* OLED power and brightness
+* ESP Restart
+
+*ESP01 opted OTA will only have Webserial and FWU only*
+
+<img src="assets/ui01.png" alt="ui01" width="50%">
+<img src="assets/ui02.png" alt="ui02" width="50%">
+
+## Update DuinoI2C_ESP
+DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ESP8266 comes with 4MB onboard flash so both approach will work. ESP01 of 1MB however, need 2 steps approach for OTA.
+
+### ESP8266 (4MB or more)
+1. Navigate to IP address of the ESP with any Internet browser and click `Upload` button
+2. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
+3. Under firmware, click `Choose file`
+4. Select your .bin file corresponding to your ESP
+5. Click `Update Firmware` and wait around 20s
+6. The ESP should restart itself and start working. If it shows WiFi Manager screen, just repeat the WiFi setup step as before
+
+<img src="assets/ui03.png" alt="ui03" width="20%"> --> <img src="assets/ui03.png" alt="ui04" width="20%"> --> <img src="assets/ui05.png" alt="ui05" width="50%"> --> <img src="assets/ui06.png" alt="ui06" width="20%"> --> <img src="assets/ui07.png" alt="ui07" width="50%">
+
+### ESP01 OTA (1MB)
+1. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.235:54321/firmware` *Replace the IP with your ESP IP*
+2. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
+3. Under firmware, click `Choose file`
+4. Select `httpUpdateServer.ino.esp01.bin.gz`
+5. Click `Update Firmware` and wait around 20s. You should see constant ON LED when WiFi is connected. If the LED stay blinking for more than 1 minute, try bring it closer to the WiFi router and restart the ESP. If still fail, the ESP may need to be updated using cable approach.
+6. Repeat step 1-3
+7. Select `DuinoI2C_ESP.ino.esp01.ota.bin.gz`
+8. Repeat step 5. The ESP should start working again.
+
+*to be continued...*
