@@ -5,17 +5,26 @@ DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get
 
 ## Supported Devices
 This project currently supports the following ESP8266 devices:
-- Adafruit ESP8266
+- Adafruit Feather HUZZAH ESP8266
 - ESP-01S (min. 1MB)
-- Wemos D1 Mini
+- LOLIN(WEMOS) D1 R2 & mini
 
 *Note: Additional devices may be added upon request. Limited to ESP8266 listed in Arduino IDE board manager*
+
+### Corresponding `.bin` for the ESP8266
+|  | Adafruit Feather HUZZAH ESP8266 | ESP-01S (min. 1MB) | LOLIN(WEMOS) D1 R2 & mini |
+| :-: | :-: | :-: | :-: |
+| DuinoI2C_ESP.ino.d1_mini.bin | :x: | ❌ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ❌ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ❌ | :x: |
+| DuinoI2C_ESP.ino.esp01.bin | :x: | ✅ (no OTA) | :x: |
+| DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ (OTA) | :x: |
 
 ## How to Download and Upload the `.bin` File
 
 ### Downloading the `.bin` File
 1. Navigate to the [esp8266](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266) section of this repository.
-2. Download the latest `.bin` file to your local machine.
+2. Download the `.bin` file corresponding to your ESP8266 board to your local machine.
 
 *Note: If you want OTA for ESP01, use `DuinoI2C_ESP.ino.esp01.ota.bin.gz`*
 
@@ -30,7 +39,7 @@ There are 2 ways to upload the `.bin`. Web Browser is the easier way.
 5. Click `ERASE`
 6. Click `PROGRAM`
 
-[espwebtool help](https://blog.spacehuhn.com/espwebtool)
+For more help: Visit [espwebtool help](https://blog.spacehuhn.com/espwebtool)
 
 #### > esptool
 ##### >> Linux
@@ -95,8 +104,16 @@ DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ES
 ## OLED (Optional)
 Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto detected at address 0x3C. If the mining rig setup is using logic-level-shifter, it is recommended to connect the OLED to 3.3V side for both VCC and I2C SDA/SCL.
 
+### Connection Pinout (Powered from 3.3V)
+|| ESP8266 | ESP01 || OLED |
+|:-:| :----: | :----: | :----: |:-----: |
+|| 3.3V | 3.3V | <---> | Vcc |
+|| GND | GND | <---> | GND |
+|`SCL`|D1 (GPIO5) | GPIO2 | <---> | SCL |
+|`SDA`|D2 (GPIO4) | GPIO0 | <---> | SDA |
+
 For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini, you may connect them by refering to the table below. Take note that `Serial` will be disabled in this use case.
-### Connection Pinout
+### Connection Pinout (Powered from TX RX Pin)
 || ESP8266 || OLED |
 |:-:| :----: | :----: |:-----: |
 || TX | <---> | Vcc |
@@ -106,5 +123,21 @@ For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini,
 
 <img src="assets/wemos_txrxpwr.jpg" alt="wemos_txrxpwr" width="30%">  Image courtesy from jpx13
 
+## Reconfigure DuinoI2C_ESP
+In case the field entered in previous WiFi Manager page changed, you may do the following to re-enter the setup page.
+
+- Press and release the ESP8266 reset button consecutively 3 times within 3 seconds (the duration may varies). OR
+- Erase the flash and re-upload the `.bin` file.
+
 ## Unlock Key
-*to be continued*
+DuinoI2C_ESP is having a soft limit of 3 workers without valid unlock key. Once a valid unlock key is available, the user may experience the full potential and even pushing the ESP8266 boundary.
+
+### BKM for Valid Unlock Key Entered
+- Tested stable operation for 15 workers. Beyond that and up until 20, may need your help to find out as I ran out of AVR.
+- Keep an eye on the free heap as it may cause instability if too low. The firmware tried it's best to keep heap space available.
+- Turn off OLED from the web dashboard as updating screen means taking away 1-3% sharetime from one of the worker. Turn it back ON when needed, it saves power too.
+- Valid worker address range is 1-127 except 60 (0x3C). Only the first 20 workers will be used.
+- if the breathing LED hung, give it 1 minutes. If it doesn't continue breathing, reset the ESP.
+
+*payment channel info to be available soon*
+
