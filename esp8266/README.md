@@ -20,6 +20,15 @@ This project currently supports the following ESP8266 devices:
 | DuinoI2C_ESP.ino.esp01.bin | :x: | ✅ (no OTA) | :x: |
 | DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ (OTA) | :x: |
 
+## Feature
+||SERIAL|WEB_SERIAL|DASHBOARD|MDNS|OLED|CRC8|OTA|PWR via TXRX|
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: |
+| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: |
+| DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: | :x: |
+| DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ | :x: | :x: | :x: | ✅ | ✅ | :x: |
+
 ## How to Download and Upload the `.bin` File
 
 ### Downloading the `.bin` File
