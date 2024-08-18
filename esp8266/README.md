@@ -24,7 +24,7 @@ This project currently supports the following ESP8266 devices:
 ||SERIAL|WEB_SERIAL|DASHBOARD|MDNS|OLED|CRC8|OTA|PWR via TXRX|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: |
-| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: |
 | DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: | :x: |
 | DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ | :x: | :x: | :x: | ✅ | ✅ | :x: |
@@ -148,5 +148,5 @@ DuinoI2C_ESP is having a soft limit of 3 workers without valid unlock key. Once 
 - Valid worker address range is 1-127 except 60 (0x3C). Only the first 20 workers will be used.
 - if the breathing LED hung, give it 1 minutes. If it doesn't continue breathing, reset the ESP.
 
-*payment channel info to be available soon*
+*payment channel info for the unlock key to be available soon*
 
