@@ -121,12 +121,12 @@ Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto 
 |`SCL`|D1 (GPIO5) | GPIO2 | <---> | SCL |
 |`SDA`|D2 (GPIO4) | GPIO0 | <---> | SDA |
 
-For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini, you may connect them by refering to the table below. Take note that `Serial` will be disabled in this use case.
+For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini to source the power from the ESP serial pins, you may connect them by refering to the table below. Take note that `Serial` will be disabled in this use case. Also note that upload via USB/USB-Serial will not work if OLED VCC/GND is connected to RX/TX pin. Disconnect OLED to enable cable upload. If disconnecting OLED is not an option, use FWU instead.
 ### Connection Pinout (Powered from TX RX Pin)
 || ESP8266 || OLED |
 |:-:| :----: | :----: |:-----: |
-|| TX | <---> | Vcc |
-|| RX | <---> | GND |
+|| TX | <---> | GND |
+|| RX | <---> | VCC |
 |`SCL`|D1 (GPIO5) | <---> | SCL |
 |`SDA`|D2 (GPIO4) | <---> | SDA |
 
