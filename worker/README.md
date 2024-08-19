@@ -13,12 +13,16 @@ Worker is only responsible to receive job from ESP, find the result, and return 
 * [ArduinoUniqueID](https://github.com/ricaun/ArduinoUniqueID) (Handle the chip ID)
 
 ## Arduino IDE
-recommended version: 1.8.19
+Recommended version: 1.8.19
 
-## I2C Address
-I2C address need to be manually assigned per device. Clashing address may produce unexpected behavior.
+## Arduino Uno/Nano/Pro - Tiny_Slave
+Arduino ATmega168/328 shall use `DuinoCoinI2C_Tiny_Slave` sketch. Logic-Level-Converter (LLC) is required if Arduino is operating at 5V and master at 3.3V.
 
-### Tiny_Slave
+Specific for Arduino Nano or Nano cloned, it is strongly recommended to update the bootloader to Optiboot to leverage watchdog timer (WDT) feature. WDT is important to make sure the AVR is restarted automatically whenever it is hanging for whatever reason over 4 seconds.
+
+Nano old bootloader will still run fine without Optiboot but the setting `WDT_EN` must be changed to `false` or the Nano will hang once timed out.
+
+### I2C Address
 Increment the `DEV_INDEX` per device and upload.
 
 Example:
@@ -26,7 +30,7 @@ Example:
 |:-:|:-:|:-:|
 |AVR0|0|1|
 |AVR1|1|2|
-|AVRx|X|3|
+|AVRx|X|X+1|
 
 ```C
 /****************** USER MODIFICATION START ****************/
@@ -40,7 +44,27 @@ Example:
 /****************** USER MODIFICATION END ******************/
 ```
 
-### ATTiny_Slave
+## Atmel ATTiny85 - ATTiny_Slave
+Use `DuinoCoinI2C_ATTiny_Slave` for ATtiny85. LLC is required if worker and host is operating at different voltage. 4k7 pullup resistors for `SDA/SCL` pins are strongly recommended. The TWI/I2C/IIC seems to work well with SCL 100KHz `WIRE_CLOCK 100000`.
+
+Add `http://drazzy.com/package_drazzy.com_index.json` to `Additional Board Manager URLs` in Arduino IDE, then go to board manager and search for `attiny` and install ATTinyCore from Spence Konde.
+
+ATTiny85 default system clock is 1MHz. This needs to be changed to get good hashrate. This sketch is applicable to Adafruit Trinket ATtiny85 too but the bootloader will be removed during fuse valud update to regain full 8KB flash capacity.
+
+You may use dedicated ATTiny programmer or any Uno/Nano to set the fuse via `Tools --> Burn Bootloader`. See table below on setting that worked for me on ATtiny85. Make sure the `Tools --> Programmer --> Arduino as ISP` is selected. Finally upload sketch using `Sketch --> Upload Using Programmer`.
+
+|Attribute|Value|
+|:-|:-|
+|Board|ATtiny25/45/85 (No Bootloader)|
+|Chip|ATtiny85|
+|Clock Source|16.5 MHz (PLL,tweaked)|
+|Timer 1 Clock|CPU|
+|LTO|Enabled|
+|millis()/micros()|Enabled|
+|Save EEPROM|EEPROM retained|
+|B.O.D Level|Disabled|
+
+### I2C Address
 Increment the `ADDRESS_I2C` per device and upload.
 
 Example:
@@ -58,3 +82,10 @@ Example:
 #define LED_EN                      true          // brightness controllable on pin 1
 /****************** USER MODIFICATION END ******************/
 ```
+
+## Benchmarks of tested devices
+
+  | Device                                                    | Average hashrate<br>(all threads) | Mining<br>threads |
+  |-----------------------------------------------------------|-----------------------------------|-------------------|
+  | Arduino Pro Mini, Uno, Nano etc.<br>(Atmega 328p/pb/16u2) | 340 H/s                           | 1                 |
+  | ATtiny85                                                  | 340 H/s                           | 1                 |
