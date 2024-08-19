@@ -4,10 +4,10 @@
 Worker is only responsible to receive job from ESP, find the result, and return the result to ESP, all via I2C. User will need to compile the source code in Arduino IDE and upload the firmware to the AVR.
 
 ## Supported Devices
-|| Arduino UNO | Arduino NANO | Atmel ATTiny85 |
-| :-: | :-: | :-: | :-: |
-| DuinoCoinI2C_Tiny_Slave | ✅ | ✅ | :x: |
-| DuinoCoinI2C_ATTiny_Slave | :x: | :x: | ✅ |
+|| UNO | NANO | Pro Mini | Atmel ATTiny85 |
+| :-: | :-: | :-: | :-: | :-: |
+| DuinoCoinI2C_Tiny_Slave | ✅ | ✅ | ✅ | :x: |
+| DuinoCoinI2C_ATTiny_Slave | :x: | :x: | :x: | ✅ |
 
 ## Library Dependency
 * [ArduinoUniqueID](https://github.com/ricaun/ArduinoUniqueID) (Handle the chip ID)
@@ -49,7 +49,7 @@ Use `DuinoCoinI2C_ATTiny_Slave` for ATtiny85. LLC is required if worker and host
 
 Add `http://drazzy.com/package_drazzy.com_index.json` to `Additional Board Manager URLs` in Arduino IDE, then go to board manager and search for `attiny` and install ATTinyCore from Spence Konde.
 
-ATTiny85 default system clock is 1MHz. This needs to be changed to get good hashrate. This sketch is applicable to Adafruit Trinket ATtiny85 too but the bootloader will be removed during fuse valud update to regain full 8KB flash capacity.
+ATTiny85 default system clock is 1MHz. This needs to be changed to get good hashrate. This sketch is applicable to Adafruit Trinket ATtiny85 too but the bootloader will be removed during fuse update to regain full 8KB flash capacity.
 
 You may use dedicated ATTiny programmer or any Uno/Nano to set the fuse via `Tools --> Burn Bootloader`. See table below on setting that worked for me on ATtiny85. Make sure the `Tools --> Programmer --> Arduino as ISP` is selected. Finally upload sketch using `Sketch --> Upload Using Programmer`.
 
