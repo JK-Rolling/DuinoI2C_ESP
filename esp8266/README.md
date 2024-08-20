@@ -150,3 +150,8 @@ DuinoI2C_ESP is having a soft limit of 3 workers without valid unlock key. Once 
 
 *payment channel info for the unlock key to be available soon*
 
+## Bug and Known Issue
+||Issue|Theory|Comment|
+|:-:|:-:|:-:|:-:|
+|1|Missing worker|When number of workers are more than 10, each worker due to it's inaccurate oscillator frequency, may WDT reset itself at different interval after power on. During the reset cycle, it may not respond to ESP I2C scanning, thus ESP will assume no worker exist.|Press the ESP reset button, check all worker are detected, if not, repeat. Potential fix in future is to increase scan iteration and add delay between scan, but this will hinder the boot speed|
+|2|Black OLED screen after FWU|Non-issue|FWU usually takes around 15 seconds to reboot once new firmware is received|
