@@ -15,19 +15,23 @@ This project currently supports the following ESP8266 devices:
 |  | Adafruit Feather HUZZAH ESP8266 | ESP-01S (min. 1MB) | LOLIN(WEMOS) D1 R2 & mini |
 | :-: | :-: | :-: | :-: |
 | DuinoI2C_ESP.ino.d1_mini.bin | :x: | ❌ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.400K.bin | :x: | ❌ | ✅ |
 | DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ❌ | ✅ |
 | DuinoI2C_ESP.ino.adafruit.bin | ✅ | ❌ | :x: |
 | DuinoI2C_ESP.ino.esp01.bin | :x: | ✅ (no OTA) | :x: |
 | DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ (OTA) | :x: |
 
 ## Feature
-||SERIAL|WEB_SERIAL|DASHBOARD|MDNS|OLED|CRC8|OTA|PWR via TXRX|
+||SERIAL|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|PWR via TXRX|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: |
-| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: |
-| DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | :x: | :x: |
-| DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ | :x: | :x: | :x: | ✅ | ✅ | :x: |
+| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | :x: |
+| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | :x: |
+| DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | :x: | :x: |
+| DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ | :x: | 100KHz | :x: | ✅ | ✅ | :x: |
+| DuinoI2C_ESP.ino.d1_mini.400K.bin | ✅ | ✅ | ✅ | 400KHz | ✅ | ✅ | ✅ | :x: |
+
+*Note: Contact me in [discord](https://discord.com/invite/kvBkccy) for custom feature combination*
 
 ## How to Download and Upload the `.bin` File
 
