@@ -18,10 +18,9 @@
 StreamString core1_bufferReceive;
 StreamString core1_bufferRequest;
 Sha1Wrapper core1_Sha1_base;
-const int core1_numSamples = 10;
-float core1_hashrates[core1_numSamples] = {0};
-int core1_sampleIndex = 0;
-bool core1_isArrayFullyPopulated = false;
+float core1_weightedMean = 0.0;        // Variable to store the weighted mean value
+const float core1_alpha = 0.2;         // Weight factor (0 < alpha <= 1), higher value gives more weight to recent values
+int core1_processedResults = 0;        // Counter to track the number of processed results
 
 void core1_setup_i2c() {
   byte addr = 2 * DEV_INDEX + I2CS_START_ADDRESS + 1;
@@ -198,26 +197,18 @@ bool core1_loop() {
 
     // handles outlier
     float current_hr = (float)ducos1result / elapsedTime;
-    if (!core1_isArrayFullyPopulated) {
-      core1_hashrates[core1_sampleIndex++] = current_hr;
-      if (core1_sampleIndex == core1_numSamples) {
-        core1_isArrayFullyPopulated = true;
-        core1_sampleIndex = 0;
-      }
+    // If fewer than 10 results have been processed, calculate a simple mean
+    if (core1_processedResults < 10) {
+      core1_weightedMean = ((core1_weightedMean * core1_processedResults) + current_hr) / (core1_processedResults + 1);
+      core1_processedResults++;
     } else {
-      float sum = 0;
-      for (int i = 0; i < core1_numSamples; i++) {
-        sum += core1_hashrates[i];
-      }
-      float meanValue = sum / core1_numSamples;
-      // check if hashrate deviates by more than 7% from mean
-      if ((current_hr > meanValue) && (abs(current_hr - meanValue) > (meanValue * 0.07))) {
+      // Calculate the weighted mean value
+      core1_weightedMean = (core1_alpha * current_hr) + ((1 - core1_alpha) * core1_weightedMean);
+  
+      // Check if the new result deviates by more than 7% from the weighted mean
+      if ((current_hr > core1_weightedMean) && (abs(current_hr - core1_weightedMean) > core1_weightedMean * 0.07)) {
         elapsedTime += 1;
-      } else {
-        core1_hashrates[core1_sampleIndex++] = current_hr;
-        if (core1_sampleIndex == core1_numSamples) {
-          core1_sampleIndex = 0;
-        }
+        printMsgln("core0: WM=" + String(core0_weightedMean) + " current_hr=" + String(current_hr) + " new_hr=" + String((float)ducos1result/elapsedTime) + " result=" + String(ducos1result) + " et="+ String(elapsedTime));
       }
     }
     String result = String(ducos1result) + "," + String(elapsedTime);

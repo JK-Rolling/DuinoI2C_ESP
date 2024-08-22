@@ -18,10 +18,9 @@
 StreamString core0_bufferReceive;
 StreamString core0_bufferRequest;
 Sha1Wrapper core0_Sha1_base;
-const int core0_numSamples = 10;
-float core0_hashrates[core0_numSamples] = {0};
-int core0_sampleIndex = 0;
-bool core0_isArrayFullyPopulated = false;
+float core0_weightedMean = 0.0;        // Variable to store the weighted mean value
+const float core0_alpha = 0.2;         // Weight factor (0 < alpha <= 1), higher value gives more weight to recent values
+int core0_processedResults = 0;        // Counter to track the number of processed results
 
 void core0_setup_i2c() {
   byte addr = 2 * DEV_INDEX + I2CS_START_ADDRESS;
@@ -200,28 +199,21 @@ bool core0_loop() {
 
     // handles outlier
     float current_hr = (float)ducos1result / elapsedTime;
-    if (!core0_isArrayFullyPopulated) {
-      core0_hashrates[core0_sampleIndex++] = current_hr;
-      if (core0_sampleIndex == core0_numSamples) {
-        core0_isArrayFullyPopulated = true;
-        core0_sampleIndex = 0;
-      }
+    // If fewer than 10 results have been processed, calculate a simple mean
+    if (core0_processedResults < 10) {
+      core0_weightedMean = ((core0_weightedMean * core0_processedResults) + current_hr) / (core0_processedResults + 1);
+      core0_processedResults++;
     } else {
-      float sum = 0;
-      for (int i = 0; i < core0_numSamples; i++) {
-        sum += core0_hashrates[i];
-      }
-      float meanValue = sum / core0_numSamples;
-      // check if hashrate deviates by more than 7% from mean
-      if ((current_hr > meanValue) && (abs(current_hr - meanValue) > (meanValue * 0.07))) {
+      // Calculate the weighted mean value
+      core0_weightedMean = (core0_alpha * current_hr) + ((1 - core0_alpha) * core0_weightedMean);
+  
+      // Check if the new result deviates by more than 7% from the weighted mean
+      if ((current_hr > core0_weightedMean) && (abs(current_hr - core0_weightedMean) > core0_weightedMean * 0.07)) {
         elapsedTime += 1;
-      } else {
-        core0_hashrates[core0_sampleIndex++] = current_hr;
-        if (core0_sampleIndex == core0_numSamples) {
-          core0_sampleIndex = 0;
-        }
+        printMsgln("core0: WM=" + String(core0_weightedMean) + " current_hr=" + String(current_hr) + " new_hr=" + String((float)ducos1result/elapsedTime) + " result=" + String(ducos1result) + " et="+ String(elapsedTime));
       }
     }
+
     String result = String(ducos1result) + "," + String(elapsedTime);
 
     // calculate crc8 for result
