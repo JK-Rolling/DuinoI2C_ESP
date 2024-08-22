@@ -211,7 +211,7 @@ bool core1_loop() {
       }
       float meanValue = sum / core1_numSamples;
       // check if hashrate deviates by more than 7% from mean
-      if (abs(current_hr - meanValue) > (meanValue * 0.07)) {
+      if ((current_hr > meanValue) && (abs(current_hr - meanValue) > (meanValue * 0.07))) {
         elapsedTime += 1;
       } else {
         core1_hashrates[core1_sampleIndex++] = current_hr;
