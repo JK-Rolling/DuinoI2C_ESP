@@ -4,13 +4,15 @@
 Worker is only responsible to receive job from ESP, find the result, and return the result to ESP, all via I2C. User will need to compile the source code in Arduino IDE and upload the firmware to the AVR.
 
 ## Supported Devices
-|| UNO | NANO | Pro Mini | Atmel ATTiny85 |
-| :-: | :-: | :-: | :-: | :-: |
-| DuinoCoinI2C_Tiny_Slave | ✅ | ✅ | ✅ | :x: |
-| DuinoCoinI2C_ATTiny_Slave | :x: | :x: | :x: | ✅ |
+|| UNO | NANO | Pro Mini | Atmel ATTiny85 | Pico RP2040 |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+| DuinoCoinI2C_Tiny_Slave | ✅ | ✅ | ✅ | :x: | :x: |
+| DuinoCoinI2C_ATTiny_Slave | :x: | :x: | :x: | ✅ | :x: |
+| DuinoCoin_RPI_Pico_DualCore | :x: | :x: | :x:| :x: | ✅ | 
 
 ## Library Dependency
 * [ArduinoUniqueID](https://github.com/ricaun/ArduinoUniqueID) (Handle the chip ID)
+* [StreamJoin](https://github.com/ricaun/StreamJoin) (For Pico)
 
 ## Arduino IDE
 Recommended version: 1.8.19
@@ -83,9 +85,53 @@ Example:
 /****************** USER MODIFICATION END ******************/
 ```
 
+## Raspberry Pi Pico
+Pico shall use `DuinoCoin_RPI_Pico_DualCore`. LLC is not needed as Pico logic level is same as ESP. The default I2C SCL frequency is 400KHz so use [DuinoI2C_ESP.ino.d1_mini.400K.bin](https://github.com/JK-Rolling/DuinoI2C_ESP/raw/main/esp8266/DuinoI2C_ESP.ino.d1_mini.400K.bin) as the master.
+
+Add `https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json` to `Additional Board Manager URLs` in Arduino IDE, then go to board manager and search for `Pico` and install board package from Earle Philhower.
+
+Experiment the CPU clock frequencies ranging from 50-300MHz to find the sweet spot between job difficulty vs. hashrate. The CPU frequency recommended is 100MHz, which can be selected from Arduino IDE `Tools->CPU Speed`.
+> [!CAUTION]
+> stability not guaranteed when overclocked
+
+Read the Knowledge Database in [kdb.ino](https://github.com/JK-Rolling/DuinoI2C_ESP/blob/main/worker/DuinoCoin_RPI_Pico_DualCore/kdb.ino) when making code changes which don't usually needed. The only change needed is  `DEV_INDEX`.
+
+### I2C Address
+Increment the `DEV_INDEX` per device and upload
+
+Example:
+||`DEV_INDEX`|Core|I2C address|
+|:-:|:-:|:-:|:-:|
+|Pico0|0|0|8|
+|Pico0|0|1|9|
+|Pico1|1|0|10|
+|Pico1|1|1|11|
+|Picox|X|1|2*X+`I2CS_START_ADDRESS`|
+|Picox|X|1|2*X+`I2CS_START_ADDRESS`+1|
+```C
+/****************** USER MODIFICATION START ****************/
+#define DEV_INDEX                   10
+#define I2CS_START_ADDRESS          8
+#define I2CS_FIND_ADDR              false               // >>> see kdb before setting it to true <<<
+#define WIRE_CLOCK                  400000              // >>> see kdb before changing this I2C clock frequency <<<
+#define I2C0_SDA                    20
+#define I2C0_SCL                    21
+#define I2C1_SDA                    26
+#define I2C1_SCL                    27
+#define CRC8_EN                     true
+#define WDT_EN                      true
+#define CORE_BATON_EN               false
+#define LED_EN                      true
+#define SENSOR_EN                   true
+#define SINGLE_CORE_ONLY            false               // >>> see kdb before setting it to true <<<
+#define WORKER_NAME                 "rp2040"
+/****************** USER MODIFICATION END ******************/
+```
+
 ## Benchmarks of tested devices
 
-  | Device                                                    | Average hashrate<br>(all threads) | Mining<br>threads |
-  |-----------------------------------------------------------|-----------------------------------|-------------------|
-  | Arduino Pro Mini, Uno, Nano etc.<br>(Atmega 328p/pb/16u2) | 340 H/s                           | 1                 |
-  | ATtiny85                                                  | 340 H/s                           | 1                 |
+  | Device                                                    | CPU Freq | Average hashrate<br>(all threads) | Mining<br>threads |
+  |-----------------------------------------------------------|----------|-----------------------------------|-------------------|
+  | Arduino Pro Mini, Uno, Nano etc.<br>(Atmega 328p/pb/16u2) |   16MHz  | 340 H/s                           | 1                 |
+  | ATtiny85                                                  |  16.5MHz | 340 H/s                           | 1                 |
+  | RP2040                                                    |  100MHz  | 4-5 KH/s                          | 2                 |
