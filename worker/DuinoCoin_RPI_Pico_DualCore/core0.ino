@@ -18,6 +18,10 @@
 StreamString core0_bufferReceive;
 StreamString core0_bufferRequest;
 Sha1Wrapper core0_Sha1_base;
+const int core0_numSamples = 10;
+float core0_hashrates[core0_numSamples] = {0};
+int core0_sampleIndex = 0;
+bool core0_isArrayFullyPopulated = false;
 
 void core0_setup_i2c() {
   byte addr = 2 * DEV_INDEX + I2CS_START_ADDRESS;
@@ -191,6 +195,33 @@ bool core0_loop() {
     // Send result back to the program with share time
     while (core0_bufferRequest.available()) core0_bufferRequest.read();
 
+    // handles less than a millisecond
+    if (elapsedTime == 0) elapsedTime = 1;
+
+    // handles outlier
+    float current_hr = (float)ducos1result / elapsedTime;
+    if (!core0_isArrayFullyPopulated) {
+      core0_hashrates[core0_sampleIndex++] = current_hr;
+      if (core0_sampleIndex == core0_numSamples) {
+        core0_isArrayFullyPopulated = true;
+        core0_sampleIndex = 0;
+      }
+    } else {
+      float sum = 0;
+      for (int i = 0; i < core0_numSamples; i++) {
+        sum += core0_hashrates[i];
+      }
+      float meanValue = sum / core0_numSamples;
+      // check if hashrate deviates by more than 7% from mean
+      if (abs(current_hr - meanValue) > (meanValue * 0.07)) {
+        elapsedTime += 1;
+      } else {
+        core0_hashrates[core0_sampleIndex++] = current_hr;
+        if (core0_sampleIndex == core0_numSamples) {
+          core0_sampleIndex = 0;
+        }
+      }
+    }
     String result = String(ducos1result) + "," + String(elapsedTime);
 
     // calculate crc8 for result
