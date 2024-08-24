@@ -21,18 +21,46 @@ This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and
 *GIF edited to 1 second/screen, no speed up*
 
 ### Connection Pinouts
-|| ESP8266 | ESP01 | OLED | Logic Level Converter | Arduino | ATTiny85 |
-|:-:| :----: | :----: | :--: | :-----: | :-----: | :-----: |
-||3.3V | 3.3V | VCC | <---> | 5V | 5V |
-||GND | GND | GND | <---> | GND | GND |
-|`SCL`|D1 (GPIO5) | GPIO2 | SCL | <---> | A5 | PB2 |
-|`SDA`|D2 (GPIO4) | GPIO0 | SDA | <---> | A4 | PB0 |
+|| ESP8266 | ESP01 | OLED | Logic Level Converter | Arduino | ATTiny85 | Pico |
+|:-:| :----: | :----: | :--: | :-----: | :-----: | :-----: | :-----: |
+|3.3V|3.3V | 3.3V | VCC | <---> | 5V | 5V | Vsys |
+|5V|||| <---> | 5V | 5V | Vsys |
+|GND|GND | GND | GND | <---> | GND | GND | GND |
+|`SCL`|D1 (GPIO5) | GPIO2 | SCL | <---> | A5 | PB2 | GP27 & GP21 (no LLC)|
+|`SDA`|D2 (GPIO4) | GPIO0 | SDA | <---> | A4 | PB0 | GP26 & GPP20 (no LLC)|
 
 ## ESP8266 Setup
 See [esp8266](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266) section of this repository.
 
 ## AVR Setup
 See [worker](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/worker) section of this repository.
+
+## Example Rig
+Pull-up resistor is highly recommended but not compulsory. YMMV. 
+
+All example rig below is using ESP8266/ESP01 as master. Power distribution is up to personal preference. Rule of thumb is, if the logic level between master and worker is different, use logic-level-converter (LLC).
+
+The combination of ESP and workers depends on ones creativity.
+
+<img src="resource/esp01_attiny85_bb.png" alt="esp01Minimal" width="100%">
+
+Minimalist :point_up_2:
+
+<img src="resource/esp01_pico_bb.png" alt="esp01Pico" width="100%">
+
+Heavy Lifter :point_up_2:
+
+<img src="resource/d1mini_pico_bb.png" alt="d1miniPico" width="100%">
+
+miniPico :point_up_2:
+
+<img src="resource/d1mini_attiny85_bb.png" alt="d1miniAttiny" width="100%">
+
+miniTiny :point_up_2:
+
+<img src="resource/d1mini_nano_bb.png" alt="d1miniNano" width="100%">
+
+miniNano :point_up_2:
 
 ## Contact
 Official Discord server: [discord.gg/kvBkccy](https://discord.com/invite/kvBkccy) look for `JK Rolling` `jpx13` `Dark_Hunter`
