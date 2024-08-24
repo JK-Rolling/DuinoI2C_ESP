@@ -139,7 +139,7 @@ For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini 
 ## Reconfigure DuinoI2C_ESP
 In case the field entered in previous WiFi Manager page changed, you may do the following to re-enter the setup page.
 
-- Press and release the ESP8266 reset button consecutively 3 times within 3 seconds (the duration may varies). OR
+- Press and release the ESP8266 reset button consecutively 3 times with 3 seconds gap in between (the duration may varies). OR
 - Erase the flash and re-upload the `.bin` file.
 
 ## Unlock Key
