@@ -26,8 +26,8 @@ This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and
 |3.3V|3.3V | 3.3V | VCC | <---> | 5V | 5V | Vsys |
 |5V|||| <---> | 5V | 5V | Vsys |
 |GND|GND | GND | GND | <---> | GND | GND | GND |
-|`SCL`|D1 (GPIO5) | GPIO2 | SCL | <---> | A5 | PB2 | GP27 & GP21 (no LLC)|
-|`SDA`|D2 (GPIO4) | GPIO0 | SDA | <---> | A4 | PB0 | GP26 & GPP20 (no LLC)|
+|`SCL`|D1 (GPIO5) | GPIO2 | SCL | <---> | A5 | PB2 | GP27 & GP21 (no LLC needed)|
+|`SDA`|D2 (GPIO4) | GPIO0 | SDA | <---> | A4 | PB0 | GP26 & GPP20 (no LLC needed)|
 
 ## ESP8266 Setup
 See [esp8266](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266) section of this repository.
@@ -63,4 +63,4 @@ miniTiny :point_up_2:
 miniNano :point_up_2:
 
 ## Contact
-Official Discord server: [discord.gg/kvBkccy](https://discord.com/invite/kvBkccy) look for `JK Rolling` `jpx13` `Dark_Hunter`
+Official Duino-Coin Discord server: [discord.gg/kvBkccy](https://discord.com/invite/kvBkccy) look for `JK Rolling` `jpx13` `Dark_Hunter` `oxy`
