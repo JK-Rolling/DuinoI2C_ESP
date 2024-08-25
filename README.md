@@ -63,4 +63,4 @@ miniTiny :point_up_2:
 miniNano :point_up_2:
 
 ## Contact
-Official Duino-Coin Discord server: [discord.gg/kvBkccy](https://discord.com/invite/kvBkccy) look for `JK Rolling` `jpx13` `Dark_Hunter` `oxy`
+Official Duino-Coin Discord server: [discord.gg/kvBkccy](https://discord.com/invite/kvBkccy) look for Developer:`JK Rolling` Beta Tester:`jpx13` `Dark_Hunter` `oxy`
