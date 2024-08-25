@@ -3,6 +3,9 @@
 ## Overview
 DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266.
 
+## Version
+0.17
+
 ## Supported Devices
 This project currently supports the following ESP8266 devices:
 - Adafruit Feather HUZZAH ESP8266
@@ -18,20 +21,25 @@ This project currently supports the following ESP8266 devices:
 | DuinoI2C_ESP.ino.d1_mini.400K.bin | :x: | ❌ | ✅ |
 | DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ❌ | ✅ |
 | DuinoI2C_ESP.ino.adafruit.bin | ✅ | ❌ | :x: |
-| DuinoI2C_ESP.ino.esp01.bin | :x: | ✅ (no OTA) | :x: |
+| DuinoI2C_ESP.ino.esp01.bin | :x: | ✅ | :x: |
+| DuinoI2C_ESP.ino.esp01.400K.bin | :x: | ✅ | :x: |
 | DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ (OTA) | :x: |
 
+> [!IMPORTANT]
+> ESP-01 with 1MB can use all esp01 .bin listed above but only filename with `ota` can perform over-the-air update successfully due to flash size limitation.
+
 ## Feature
-||SERIAL|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|PWR via TXRX|
+||SERIAL|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|OLED PWR via TXRX|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | :x: |
 | DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | :x: |
 | DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | :x: | :x: |
 | DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ | :x: | 100KHz | :x: | ✅ | ✅ | :x: |
+| DuinoI2C_ESP.ino.esp01.400K.bin | ✅ | ✅ | ✅ | 400KHz | ✅ | ✅ | :x: | :x: |
 | DuinoI2C_ESP.ino.d1_mini.400K.bin | ✅ | ✅ | ✅ | 400KHz | ✅ | ✅ | ✅ | :x: |
 
-*Note: Contact me in [discord](https://discord.com/invite/kvBkccy) for custom feature combination*
+*Note: Contact me in official Duino-Coin [discord](https://discord.com/invite/kvBkccy) for custom feature combination*
 
 ## How to Download and Upload the `.bin` File
 
@@ -73,7 +81,7 @@ After flashing and powering on your ESP8266 for the first time, it will create a
 ### Connecting to the WiFi Manager
 1. Connect your computer or phone to the WiFi network hosted by the ESP8266. You may connect the WiFi network `DuinoI2C_ESP` and key in password as `password` manually or use QR scanner to skip the typing if OLED is connected to the ESP. Or just scan the QR below in this page.
 2. Open a web browser and navigate to http://192.168.4.1 by typing in the browser or use QR scanner to skip the typing if OLED is connected to the ESP.
-3. The web interface will allow you to configure your WiFi credentials, Duino username and mining key, and optionally the firmware OTA credential.
+3. The web interface will allow you to configure your WiFi credentials, Duino username and mining key, and optionally the firmware OTA credential. FWU - Firmware WiFi Update
 4. Click on Save button to store the inputs in ESP8266. The ESP should restart automatically and start working!
 
 <img src="assets/ui10.jpg" alt="ui10" width="20%"> --> <img src="assets/ui11.jpg" alt="ui11" width="20%"> --> <img src="assets/ui12.jpg" alt="ui12" width="20%"> --> <img src="assets/ui08.jpg" alt="ui08" width="20%"> --> <img src="assets/ui09.jpg" alt="ui09" width="20%"> --> <img src="assets/ui13.jpg" alt="ui13" width="20%"> --> <img src="assets/ui14.jpg" alt="ui14" width="20%">
