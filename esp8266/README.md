@@ -29,7 +29,7 @@ This project currently supports the following ESP8266 devices:
 > ESP-01 with 1MB can use all esp01 .bin listed above but only filename with `ota` can perform over-the-air update successfully due to flash size limitation.
 
 ## Feature
-||SERIAL|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|OLED PWR via TXRX|
+||SERIAL (500Kbps)|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|OLED PWR via TXRX|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | :x: |
 | DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | ✅ |
