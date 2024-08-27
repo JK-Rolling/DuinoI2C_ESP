@@ -62,5 +62,12 @@ miniTiny :point_up_2:
 
 miniNano :point_up_2:
 
+## Share rate per Pico worker
+Based on actual data on RP2040 worker. Job diff 128, Hashrate 4.3KH/s, Ping time 140ms. Measurement taken from average share rate since first share submission.
+
+The graph shows a share rate of around 0.55 shares/worker from 2 to 20 workers. No significant drop in share rate when more workers are added. This also indicates the share rate will only increase if the ping time is lower.
+
+<img src="resource/shrate_per_pico_worker.png" alt="shrate_per_worker" width="100%">
+
 ## Contact
 Official Duino-Coin Discord server: [discord.gg/kvBkccy](https://discord.com/invite/kvBkccy) look for Developer:`JK Rolling` Beta Tester:`jpx13` `Dark_Hunter` `oxy`
