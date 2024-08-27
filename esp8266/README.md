@@ -153,6 +153,10 @@ In case the field entered in previous WiFi Manager page changed, you may do the 
 ## Unlock Key
 DuinoI2C_ESP is having a soft limit of 3 workers without valid unlock key. Once a valid unlock key is available, the user may experience the full potential and even pushing the ESP8266 boundary.
 
+You may get the unlock key by scanning QR code below or click on this [payment link to stripe.com](https://buy.stripe.com/00g6oU19K78mdHO4gh). I would be grateful for your support but if this is not your thing, that is totally fine too. Hope you get to see how powerful this little ESP8266 is!
+
+<img src="assets/qr_00g6oU19K78mdHO4gh.png" alt="stripe_pay" width="20%">
+
 ### BKM for Valid Unlock Key Entered
 - Tested stable operation for 15 workers. Beyond that and up until 20, may need your help to find out as I ran out of AVR.
 - Keep an eye on the free heap as it may cause instability if too low. The firmware tried it's best to keep heap space available.
@@ -160,7 +164,6 @@ DuinoI2C_ESP is having a soft limit of 3 workers without valid unlock key. Once 
 - Valid worker address range is 1-127 except 60 (0x3C). Only the first 20 workers will be used.
 - if the breathing LED hung, give it 1 minutes. If it doesn't continue breathing, reset the ESP.
 
-*payment channel info for the unlock key to be available soon*
 
 ## Bug and Known Issue
 ||Issue|Theory|Comment|
