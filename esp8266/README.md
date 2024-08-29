@@ -170,3 +170,4 @@ You may get the unlock key by scanning QR code below or click on this [payment l
 |:-:|:-:|:-:|:-:|
 |1|Missing worker|When number of workers are more than 10, each worker due to it's inaccurate oscillator frequency, may WDT reset itself at different interval after power on. During the reset cycle, it may not respond to ESP I2C scanning, thus ESP will assume no worker exist.|Press the ESP reset button, check all worker are detected, if not, repeat. Potential fix in future is to increase scan iteration and add delay between scan, but this will hinder the boot speed|
 |2|Black OLED screen after FWU|Non-issue|FWU usually takes around 15 seconds to reboot once new firmware is received|
+|3|Discontinuity in webserial share count print|The free heap is running too low|Non-essential task, in this case webserial print is suspended. It'll auto resume once the free heap is back to healthy level|
