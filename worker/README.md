@@ -135,3 +135,6 @@ Example:
   | Arduino Pro Mini, Uno, Nano etc.<br>(Atmega 328p/pb/16u2) |   16MHz  | 340 H/s                           | 1                 |
   | ATtiny85                                                  |  16.5MHz | 340 H/s                           | 1                 |
   | RP2040                                                    |  100MHz  | 4-5 KH/s                          | 2                 |
+
+## Showcasing Ready Made Mining Rig - Cytron Maker Pi Pico
+<img src="assets/makerPiPico.png" alt="makerPiPico" width="50%">
