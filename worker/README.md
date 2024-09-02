@@ -97,7 +97,7 @@ Experiment the CPU clock frequencies ranging from 50-300MHz to find the sweet sp
 Read the Knowledge Database in [kdb.ino](https://github.com/JK-Rolling/DuinoI2C_ESP/blob/main/worker/DuinoCoin_RPI_Pico_DualCore/kdb.ino) when making code changes which don't usually needed. The only change needed is  `DEV_INDEX`.
 
 ### I2C Address
-Increment the `DEV_INDEX` per device and upload
+Increment the `DEV_INDEX` per device and upload. Each Pico will take 2 addresses. 1 address for each core.
 
 Example:
 ||`DEV_INDEX`|Core|I2C address|
