@@ -39,7 +39,7 @@ This project currently supports the following ESP8266 devices:
 | DuinoI2C_ESP.ino.esp01.400K.bin | ✅ | ✅ | ✅ | 400KHz | ✅ | ✅ | :x: | :x: |
 | DuinoI2C_ESP.ino.d1_mini.400K.bin | ✅ | ✅ | ✅ | 400KHz | ✅ | ✅ | ✅ | :x: |
 
-*Note: Contact me in official Duino-Coin [discord](https://discord.com/invite/kvBkccy) for custom feature combination*
+*Note: Contact me in official Duino-Coin [discord](https://discord.gg/duino-coin-677615191793467402) for custom feature combination*
 
 ## How to Download and Upload the `.bin` File
 
