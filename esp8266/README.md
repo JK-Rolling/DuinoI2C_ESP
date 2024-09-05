@@ -157,6 +157,9 @@ You may get the unlock key by scanning QR code below or click on this payment li
 
 stripe.com :point_right:<img src="assets/qr_00g6oU19K78mdHO4gh.png" alt="stripe_pay" width="20%"> <img src="assets/DuinoI2C_ESP U-qrcode.png" alt="paypal_pay" width="20%">:point_left: paypal.com
 
+> [!TIP]
+> The unlock key can be reused for multiple ESP8266
+
 ### BKM for Valid Unlock Key Entered
 - Tested stable operation for 15 workers. Beyond that and up until 20, may need your help to find out as I ran out of AVR.
 - Keep an eye on the free heap as it may cause instability if too low. The firmware tried it's best to keep heap space available.
