@@ -3,6 +3,9 @@
 ## Overview
 Worker is only responsible to receive job from ESP, find the result, and return the result to ESP, all via I2C. User will need to compile the source code in Arduino IDE and upload the firmware to the AVR.
 
+> [!IMPORTANT]
+> If you came from [DuinoCoinI2C](https://github.com/JK-Rolling/DuinoCoinI2C), make sure to reflash the worker with sketch from this repo. They are not backward compatible due to performance reason
+
 ## Supported Devices
 || UNO | NANO | Pro Mini | Atmel ATTiny85 | Pico RP2040 |
 | :-: | :-: | :-: | :-: | :-: | :-: |
