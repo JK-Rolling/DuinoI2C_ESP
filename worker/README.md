@@ -52,6 +52,8 @@ Example:
 ## Atmel ATTiny85 - ATTiny_Slave
 Use `DuinoCoinI2C_ATTiny_Slave` for ATtiny85. LLC is required if worker and host is operating at different voltage. 4k7 pullup resistors for `SDA/SCL` pins are strongly recommended. The TWI/I2C/IIC seems to work well with SCL 100KHz `WIRE_CLOCK 100000`.
 
+ATtiny85 pin PB1 is using PWM to drive connected LED so resistor may be optional. In the case where resistor is necessary, use this equation to calculate the resistance. `R = (Vs - Vf) / If`. For LED of 2V forward voltage and 20mA, 5V may get 150 Ohm, 3.3V may get 65 Ohm. One may use higher value resistance where no exact resistor matches the calculated value.
+
 Add `http://drazzy.com/package_drazzy.com_index.json` to `Additional Board Manager URLs` in Arduino IDE, then go to board manager and search for `attiny` and install ATTinyCore from Spence Konde.
 
 ATTiny85 default system clock is 1MHz. This needs to be changed to get good hashrate. This sketch is applicable to Adafruit Trinket ATtiny85 too but the bootloader will be removed during fuse update to regain full 8KB flash capacity.
