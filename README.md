@@ -13,7 +13,7 @@ This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and
 9. **ESP Restart**. Any time when ESP act abnormally, restart it with a click of a button or from your phone/computer.
 10. **CRC8 Integrity**. I2C communication between ESP and AVR is CRC8 protected to ensure data is corruption free
 
-*\*Unlocked. For Locked firmware, free up to 3 workers*
+*\*[Unlocked](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266#unlock-key). For Locked firmware, free up to 3 workers*
 
 ## Mining Rig Setup
 ![](resource/DuinoI2C_ESP-rig.gif)
