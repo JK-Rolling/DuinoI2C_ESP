@@ -122,6 +122,11 @@ DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ES
 7. Select `DuinoI2C_ESP.ino.esp01.ota.bin.gz`
 8. Repeat step 5. The ESP should start working again.
 
+### CLI Update
+The OTA update can be automated using script or command line from Linux terminal. 
+
+`curl -u admin:admin -F "image=@firmware.bin" http://192.168.0.235:54321/firmware`
+
 ## OLED (Optional)
 Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto detected at address 0x3C. If the mining rig setup is using logic-level-shifter, it is recommended to connect the OLED to 3.3V side for both VCC and I2C SDA/SCL.
 
