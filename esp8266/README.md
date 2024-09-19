@@ -68,12 +68,15 @@ For more help: Visit [espwebtool help](https://blog.spacehuhn.com/espwebtool)
 2. `esptool.py --chip esp8266 --port /dev/ttyUSB0 erase_flash`. Replace device path to your actual one. Note that erase flash will wipe out all existing data including WiFi credential. Skip this step if you want to keep them.
 3. `esptool.py --chip esp8266 --port /dev/ttyUSB0 --baud 115200 write_flash 0x00000 DuinoI2C_ESP.bin`. Replace device path and .bin path to your actual one
 
-##### >> Windows
+##### >> Windows CLI
 1. (First Time) Download esptool from [esp_tool](https://github.com/espressif/esptool/releases). Example: esptool-v4.7.0-win64.zip
 2. (First Time) Extract the .zip then look for esptool or esptool.exe in Windows Explorer
 3. Open up a command prompt. You may use `Shift + Right click` in Windows Explorer to pick `Open in Terminal` from menu
 4. `esptool.exe --chip esp8266 --port COM4 erase_flash`. Replace COM port to your actual one
 5. `esptool.exe --chip esp8266 --port COM4 --baud 115200 write_flash 0x00000 DuinoI2C_ESP.bin`. Replace COM port and .bin path to your actual one
+
+##### >> Windows GUI
+Refer to [ESPGUITOOL](https://github.com/CGameDev/ESPGUITOOL). Thanks CGameDev!
 
 ## Configure DuinoI2C_ESP
 After flashing and powering on your ESP8266 for the first time, it will create a soft access point and launch a WiFi Manager web interface, allowing the user to configure it for proper operation. Note that ESP8266 will only work with 2.4GHz WiFi so the WiFi router may need to enable 2.4GHz if not done so already.
