@@ -184,12 +184,13 @@ stripe.com :point_right:<img src="assets/qr_00g6oU19K78mdHO4gh.png" alt="stripe_
 > [!TIP]
 > The unlock key can be reused for multiple ESP8266. One may use 3 workers/ESP without unlock key but may find the total cost is cheaper with unlock key
 
-### BKM for Valid Unlock Key Entered
+### BKM (Best Known Method)
 - Tested stable operation for 15 workers. Beyond that and up until 20, may need your help to find out as I ran out of AVR.
 - Keep an eye on the free heap as it may cause instability if too low. The firmware tried it's best to keep heap space available.
 - Turn off OLED from the web dashboard as updating screen means taking away 1-3% sharetime from one of the worker. Turn it back ON when needed, it saves power too.
 - Valid worker address range is 1-127 except 60 (0x3C). Only the first 20 workers will be used.
 - if the breathing LED hung, give it 1 minutes. If it doesn't continue breathing, reset the ESP.
+- Best ESP-worker combination per experiment is ESP 100KHz and Attiny85 400KHz. The KHz here refers to I2C clock frequency. This combo submit **8.6%** more accepted shares than ESP 100KHz and Attiny85 100KHz combo. Thanks jpx13 for collecting this data!
 
 
 ## Bug and Known Issue
