@@ -25,7 +25,7 @@
 #define TEMPERATURE_OFFSET          287           // calibrate ADC here
 #define TEMPERATURE_COEFF           1             // calibrate ADC further
 #define LED_PIN                     1
-#define LED_BRIGHTNESS              8             // 1-255
+#define LED_BRIGHTNESS              1             // 1-255
 /****************** FINE TUNING END ************************/
 //#define EEPROM_ADDRESS              0
 #if defined(ARDUINO_AVR_UNO) | defined(ARDUINO_AVR_PRO)
