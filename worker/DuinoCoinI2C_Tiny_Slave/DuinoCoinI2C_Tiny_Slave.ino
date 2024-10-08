@@ -19,8 +19,9 @@
 /****************** USER MODIFICATION END ******************/
 /*---------------------------------------------------------*/
 /****************** FINE TUNING START **********************/
-#define LED_PIN                     LED_BUILTIN
+#define LED_PIN                     LED_BUILTIN  // Uno / Nano onboard LED (13) does not support brightness control. use pin (3, 5, 6, 9, 10, or 11) instead
 #define LED_BRIGHTNESS              255          // 1-255
+#define LED_PROTECT                 true         // protect LED overvoltage. only set to false for LED with current limiting resistor or matching specs LED
 #define BLINK_SHARE_FOUND           1
 #define BLINK_SETUP_COMPLETE        2
 #define BLINK_BAD_CRC               3
@@ -31,7 +32,7 @@
 #define TEMPERATURE_OFFSET          338
 #define FILTER_LP                   0.1
 /****************** FINE TUNING END ************************/
-
+uint8_t led_brightness = LED_BRIGHTNESS;
 #if WDT_EN
 #include <avr/wdt.h>
 #endif
@@ -198,7 +199,28 @@ void do_work()
       return;
     }
     else if (buffer[0] == 's') {
-      // not used at the moment
+      char f = buffer[4];
+      // i2c_cmd
+      //pos 0123[4]5678
+      //    set,[d]im,123$
+      switch (f) {
+        case 'd': // led dim
+          // Tokenize the buffer string using commas as delimiters
+          char* token = strtok(buffer, ","); // "set"
+          token = strtok(NULL, ",");         // "dim"
+          token = strtok(NULL, "$");         // "123" (or "1")
+        
+          // Convert the extracted token to a number
+          if (token != NULL) {
+            uint8_t brightness = atoi(token);
+            led_brightness = (LED_PROTECT && brightness > 127) ? 128 : brightness;
+          }
+          break;
+      }
+      buffer_position = 0;
+      buffer_length = 0;
+      working = false;
+      return;
     }
 
     #if I2CS_FIND_ADDR
@@ -312,7 +334,8 @@ uint32_t work(char * lastblockhash, char * newblockhash, int difficulty)
   duco_hash_init(&hash, lastblockhash);
 
   char nonceStr[10 + 1];
-  for (int nonce = 0; nonce < difficulty*100+1; nonce++) {
+  int nonce_max = difficulty*100+1;
+  for (int nonce = 0; nonce < nonce_max; nonce++) {
     ultoa(nonce, nonceStr, 10);
 
     uint8_t const * hash_bytes = duco_hash_try_nonce(&hash, nonceStr);
@@ -486,7 +509,8 @@ uint8_t crc8(uint8_t *args, uint8_t len) {
 
 void led_on() {
   if (!LED_EN) return;
-  digitalWrite(LED_PIN, HIGH);
+  if (led_brightness == 255) digitalWrite(LED_PIN, HIGH);
+  else analogWrite(LED_PIN, led_brightness);
 }
 
 void led_off() {
@@ -499,7 +523,7 @@ void Blink(uint8_t count, uint8_t pin = LED_BUILTIN, uint8_t dly = 50) {
   uint8_t state = LOW;
 
   for (int x=0; x<(count << 1); ++x) {
-    analogWrite(pin, state ^= LED_BRIGHTNESS);
+    analogWrite(pin, state ^= led_brightness);
     delay(dly);
   }
 }
