@@ -59,6 +59,7 @@ There are 2 ways to upload the `.bin`. Web Browser is the easier way.
 4. On first row, click `SELECT`, then browse to the .bin file downloaded
 5. Click `ERASE`
 6. Click `PROGRAM`
+7. When done. Reset or power cycle the ESP manually
 
 For more help: Visit [espwebtool help](https://blog.spacehuhn.com/espwebtool)
 
