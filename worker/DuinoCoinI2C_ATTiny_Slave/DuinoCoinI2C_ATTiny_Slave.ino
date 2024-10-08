@@ -5,7 +5,7 @@
 */
 //#pragma GCC optimize ("-Ofast")
 #include <ArduinoUniqueID.h>  // https://github.com/ricaun/ArduinoUniqueID
-#include <EEPROM.h>
+//#include <EEPROM.h>
 #include <Wire.h>
 #include <avr/wdt.h>
 #include "duco_hash.h"
@@ -19,13 +19,12 @@
 /****************** USER MODIFICATION END ******************/
 /*---------------------------------------------------------*/
 /****************** FINE TUNING START **********************/
-#define WORKER_NAME                 "t"
-#define WIRE_MAX                    32
-#define WIRE_CLOCK                  100000
+#define WIRE_CLOCK                  400000
 #define TEMPERATURE_OFFSET          287           // calibrate ADC here
 #define TEMPERATURE_COEFF           1             // calibrate ADC further
 #define LED_PIN                     1
 #define LED_BRIGHTNESS              1             // 1-255
+#define LED_PROTECT                 true          // protect LED overvoltage. only set to false for LED with current limiting resistor or matching specs LED
 /****************** FINE TUNING END ************************/
 //#define EEPROM_ADDRESS              0
 #if defined(ARDUINO_AVR_UNO) | defined(ARDUINO_AVR_PRO)
@@ -46,21 +45,25 @@
 #define SerialPrintln(x)
 #endif
 
+uint8_t led_brightness = LED_BRIGHTNESS;
 #if LED_EN
-#define LedBegin()                DDRB |= (1 << LED_PIN);
-#if LED_BRIGHTNESS == 255
-#define LedHigh()                 PORTB |= (1 << LED_PIN);
-#define LedLow()                  PORTB &= ~(1 << LED_PIN);
+  #define LedBegin()                DDRB |= (1 << LED_PIN); LedPWM();
+  #if (LED_BRIGHTNESS == 255 && LED_PROTECT == false)
+    #define LedPWM()
+    #define LedHigh()                 PORTB |= (1 << LED_PIN);
+    #define LedLow()                  PORTB &= ~(1 << LED_PIN);
+  #else
+    #define LedPWM()                  TCCR0A |= (1 << WGM00) | (1 << WGM01); TCCR0A |= (1 << COM0B1); TCCR0B |= (1 << CS01) | (1 << CS00);
+    #define LedHigh()                 if (led_brightness) {TCCR0A |= (1 << COM0B1); OCR0B = led_brightness;}
+    #define LedLow()                  TCCR0A &= ~(1 << COM0B1); PORTB &= ~(1 << LED_PIN);
+  #endif
+  #define LedBlink()                LedHigh(); delay(100); LedLow(); delay(100);
 #else
-#define LedHigh()                 analogWrite(LED_PIN, LED_BRIGHTNESS);
-#define LedLow()                  analogWrite(LED_PIN, 0);
-#endif
-#define LedBlink()                LedHigh(); delay(100); LedLow(); delay(100);
-#else
-#define LedBegin()
-#define LedHigh()
-#define LedLow()
-#define LedBlink()
+  #define LedBegin()
+  #define LedPWM()
+  #define LedHigh()
+  #define LedLow()
+  #define LedBlink()
 #endif
 
 #if CRC8_EN
@@ -74,7 +77,6 @@
 
 static const char DUCOID[] PROGMEM = "DUCOID";
 //static const char ZEROS[] PROGMEM = "000";
-static const char WK_NAME[] PROGMEM = WORKER_NAME;
 static const char UNKN[] PROGMEM = "un";
 static const char ONE[] PROGMEM = "1";
 static const char ZERO[] PROGMEM = "0";
@@ -93,7 +95,7 @@ void(* resetFunc) (void) = 0;//declare reset function at address 0
 // --------------------------------------------------------------------- //
 
 void setup() {
-  if (SENSOR_EN) {
+  #if (SENSOR_EN)
     // Setup the Analog to Digital Converter -  one ADC conversion
     //   is read and discarded
     ADCSRA &= ~(_BV(ADATE) |_BV(ADIE)); // Clear auto trigger and interrupt enable
@@ -101,7 +103,7 @@ void setup() {
     ADMUX = 0xF | _BV( REFS1 );         // ADC4 (Temp Sensor) and Ref voltage = 1.1V;
     delay(3);                           // Settling time min 1ms
     getADC();                           // discard first read
-  }
+  #endif
   SerialBegin();
   if (WDT_EN) {
     wdt_disable();
@@ -172,24 +174,18 @@ void do_work()
       //    get,[s]inglecore$
       //    get,[f]req$
       char f = buffer[4];
-      switch (tolower(f)) {
+      switch (f) {
+        #if SENSOR_EN
         case 't': // temperature
           if (SENSOR_EN) ltoa(getTemperature(), buffer, 8);
           else strcpy_P(buffer, ZERO);
           SerialPrint("SENSOR_EN: ");
           break;
-        case 'f': // i2c clock frequency
-          ltoa(WIRE_CLOCK, buffer, 10);
-          SerialPrint("WIRE_CLOCK: ");
-          break;
+        #endif
         case 'c': // crc8 status
           if (CRC8_EN) strcpy_P(buffer, ONE);
           else strcpy_P(buffer, ZERO);
           SerialPrint("CRC8_EN: ");
-          break;
-        case 'n': // worker name
-          strcpy_P(buffer, WORKER_NAME);
-          SerialPrint("WORKER: ");
           break;
         case 'i': // ducoid
           strcpy_P(buffer, DUCOID);
@@ -212,6 +208,31 @@ void do_work()
       working = false;
       jobdone = true;
       if (WDT_EN) wdt_reset();
+      return;
+    }
+
+    else if (buffer[0] == 's') {
+      char f = buffer[4];
+      // i2c_cmd
+      //pos 0123[4]5678
+      //    set,[d]im,123$
+      switch (f) {
+        case 'd': // led dim
+          // Tokenize the buffer string using commas as delimiters
+          char* token = strtok(buffer, ","); // "set"
+          token = strtok(NULL, ",");         // "dim"
+          token = strtok(NULL, "$");         // "123" (or "1")
+        
+          // Convert the extracted token to a number
+          if (token != NULL) {
+            uint8_t brightness = atoi(token);
+            led_brightness = (LED_PROTECT && brightness > 127) ? 128 : brightness;
+          }
+          break;
+      }
+      buffer_position = 0;
+      buffer_length = 0;
+      working = false;
       return;
     }
     do_job();
@@ -309,7 +330,8 @@ uint16_t work(char * lastblockhash, char * newblockhash, uint8_t difficulty)
   static duco_hash_state_t hash;
   duco_hash_init(&hash, lastblockhash);
   char nonceStr[10 + 1];
-  for (uint16_t nonce = 0; nonce < difficulty*100+1; nonce++) {
+  uint16_t nonce_max = difficulty*100+1;
+  for (uint16_t nonce = 0; nonce < nonce_max; nonce++) {
     ultoa(nonce, nonceStr, 10);
     uint8_t const * hash_bytes = duco_hash_try_nonce(&hash, nonceStr);
     if (memcmp(hash_bytes, newblockhash, HASH_BUFFER_SIZE) == 0) {
@@ -345,7 +367,7 @@ void initialize_i2c(void) {
   Wire.onRequest(onRequestResult);
 }
 
-void onReceiveJob(uint8_t howMany) {    
+void onReceiveJob(int howMany) {    
   if (howMany == 0) return;
   if (working) return;
   if (jobdone) return;
@@ -387,6 +409,7 @@ uint8_t crc8(uint8_t *args, uint8_t len) {
 }
 #endif
 
+#if (SENSOR_EN)
 // Calibration of the temperature sensor has to be changed for your own ATtiny85
 // per tech note: http://www.atmel.com/Images/doc8108.pdf
 uint16_t chipTemp(uint16_t raw) {
@@ -462,3 +485,4 @@ uint16_t getRawVcc() {
   
   return rawVcc;
 }
+#endif
