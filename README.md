@@ -9,7 +9,7 @@ This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and
 5. **View live stats on web serial**. Detailed info like share acceptance, share rate, ping time will scroll up non-stop during normal operation.
 6. **Firmware update via WiFi**. After loading DuinoI2C_ESP via cable the first time, subsequent update can be done over WiFi. Bye cable!
 7. **Breathing LED**. Onboard LED will indicate if the ESP is running happily.
-8. **Dark ambient friendly**. Control the brightness of the OLED, turn ON/OFF the OLED and onboard LED at will from your phone/computer.
+8. **Dark ambient friendly**. Control the brightness of the OLED, turn ON/OFF the OLED, onboard LED, and worker LED at will from your phone/computer.
 9. **ESP Restart**. Any time when ESP act abnormally, restart it with a click of a button or from your phone/computer.
 10. **CRC8 Integrity**. I2C communication between ESP and AVR is CRC8 protected to ensure data is corruption free
 
