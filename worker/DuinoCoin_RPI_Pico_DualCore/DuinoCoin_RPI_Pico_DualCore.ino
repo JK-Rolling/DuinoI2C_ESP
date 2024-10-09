@@ -93,6 +93,7 @@ bool core0_started = false, core1_started = false;
 uint32_t core0_shares = 0, core0_shares_ss = 0, core0_shares_local = 0;
 uint32_t core1_shares = 0, core1_shares_ss = 0, core1_shares_local = 0;
 struct repeating_timer timer;
+uint8_t core0_led_brightness = 255, core1_led_brightness = 255;
 
 // Core0
 void setup() {
@@ -157,7 +158,7 @@ void loop() {
       core0_started = true;
       printMsg(F("core0 job done :"));
       printMsg(core0_response());
-      BlinkFade();
+      BlinkFade(core0_led_brightness);
       if (WDT_EN && wdt_pet) {
         watchdog_update();
       }
@@ -201,7 +202,7 @@ void loop1() {
       core1_started = true;
       printMsg(F("core1 job done :"));
       printMsg(core1_response());
-      BlinkFade();
+      BlinkFade(core1_led_brightness);
       if (WDT_EN && wdt_pet) {
         watchdog_update();
       }

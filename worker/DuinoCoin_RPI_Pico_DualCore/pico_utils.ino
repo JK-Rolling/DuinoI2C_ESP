@@ -131,7 +131,7 @@ bool repeating_timer_callback(struct repeating_timer *t) {
   return true;
 }
 
-void BlinkFade(void) {
+void BlinkFade(uint8_t led_brightness) {
   if (!LED_EN) return;
-  LED_FADE = 255;
+  LED_FADE = led_brightness;
 }

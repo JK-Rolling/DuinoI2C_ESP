@@ -88,10 +88,11 @@ bool core0_loop() {
   if (core0_bufferReceive.available() > 0 && 
       core0_bufferReceive.indexOf("$") != -1) {
     String action = core0_bufferReceive.readStringUntil(',');
-    String field  = core0_bufferReceive.readStringUntil('$');
+    String field;
     String response;
 
     if (action == "get") {
+      field  = core0_bufferReceive.readStringUntil('$');
       switch (tolower(field[0])) {
         case 't': // temperature
           if (SENSOR_EN) response = String(read_temperature());
@@ -136,7 +137,12 @@ bool core0_loop() {
       core0_send(response);
     }
     else if (action == "set") {
-      // not used at the moment
+      field  = core0_bufferReceive.readStringUntil(',');
+      switch (tolower(field[0])) {
+        case 'd' : // dim
+          core0_led_brightness = core0_bufferReceive.readStringUntil('$').toInt();
+          break;
+      }
     }
     if (WDT_EN && wdt_pet) {
       watchdog_update();
