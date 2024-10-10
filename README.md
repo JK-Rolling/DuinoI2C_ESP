@@ -1,5 +1,5 @@
 # DuinoI2C_ESP
-This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and up to ~~10~~ **20** AVR workers.
+This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and up to ~~10~~ **20** AVR workers with share rate close to USB mining rig setup!
 
 ## Feature Highlights
 1. **High share rate**. The DUCO earning highly dependent on number of share found and submitted. Higher share rate means higher earning!
