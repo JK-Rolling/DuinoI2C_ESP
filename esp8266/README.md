@@ -91,10 +91,11 @@ After flashing and powering on your ESP8266 for the first time, it will create a
 <img src="assets/ui10.jpg" alt="ui10" width="20%"> --> <img src="assets/ui11.jpg" alt="ui11" width="20%"> --> <img src="assets/ui12.jpg" alt="ui12" width="20%"> --> <img src="assets/ui08.jpg" alt="ui08" width="20%"> --> <img src="assets/ui09.jpg" alt="ui09" width="20%"> --> <img src="assets/ui13.jpg" alt="ui13" width="20%"> --> <img src="assets/ui14.jpg" alt="ui14" width="20%">
 
 ## Control and Monitor DuinoI2C_ESP
-DuinoI2C_ESP allow user to access the following
+DuinoI2C_ESP web dashboard allow user to access the following
 * Webserial
 * Firmware WiFi Update (FWU or OTA) with security
 * Onboard LED power
+* Worker LED brightness
 * OLED power and brightness
 * ESP Restart
 
