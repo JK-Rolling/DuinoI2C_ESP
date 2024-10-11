@@ -25,7 +25,11 @@ Arduino ATmega168/328 shall use `DuinoCoinI2C_Tiny_Slave` sketch. Logic-Level-Co
 
 Specific for Arduino Nano or Nano cloned, it is strongly recommended to update the bootloader to Optiboot to leverage watchdog timer (WDT) feature. WDT is important to make sure the AVR is restarted automatically whenever it is hanging for whatever reason over 4 seconds.
 
-Nano old bootloader will still run fine without Optiboot but the setting `WDT_EN` must be changed to `false` or the Nano will hang once timed out.
+> [!IMPORTANT]
+> Nano old bootloader will still run fine without Optiboot but the setting `WDT_EN` must be changed to `false` or the Nano will hang once timed out.
+
+> [!NOTE]
+> Due to Uno/Nano onboard LED is connected to non-PWM pin, so there will only be ON or OFF state and no dimming is possible. You may connect external LED to pin 3, 5, 6, 9, 10, or 11 to realise LED dimming.
 
 ### I2C Address
 Increment the `DEV_INDEX` per device and upload.
