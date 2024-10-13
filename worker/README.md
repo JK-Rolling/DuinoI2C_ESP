@@ -29,7 +29,7 @@ Specific for Arduino Nano or Nano cloned, it is strongly recommended to update t
 > Nano old bootloader will still run fine without Optiboot but the setting `WDT_EN` must be changed to `false` or the Nano will hang once timed out.
 
 > [!NOTE]
-> Due to Uno/Nano onboard LED is connected to non-PWM pin, so there will only be ON or OFF state and no dimming is possible. You may connect external LED to pin 3, 5, 6, 9, 10, or 11 to realise LED dimming.
+> Due to Uno/Nano onboard LED is connected to non-PWM pin, so there will only be ON or OFF state and no dimming is possible. You may connect external LED to pin 3, 5, 6, 9, 10, or 11 to realise LED dimming. Power LED on the other hand, cannot be disabled from code. It can only be disabled by desoldering the LED or resistor.
 
 ### I2C Address
 Increment the `DEV_INDEX` per device and upload.
