@@ -78,7 +78,7 @@ extern "C" {
 
 // prototype
 void Blink(uint8_t count, uint8_t pin);
-void BlinkFade(void);
+void BlinkFade(uint8_t led_brightness);
 bool repeating_timer_callback(struct repeating_timer *t);
 
 static String DUCOID;
