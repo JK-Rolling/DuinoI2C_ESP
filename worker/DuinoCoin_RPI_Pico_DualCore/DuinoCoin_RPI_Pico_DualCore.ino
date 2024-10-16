@@ -83,6 +83,7 @@ bool repeating_timer_callback(struct repeating_timer *t);
 
 static String DUCOID;
 static mutex_t serial_mutex;
+static mutex_t led_fade_mutex;
 static bool core_baton;
 static bool wdt_pet = true;
 static uint16_t wdt_period_half = WDT_PERIOD/2;
@@ -100,6 +101,10 @@ void setup() {
   bool print_on_por = true;
   SerialBegin();
 
+  // initialize mutex
+  mutex_init(&serial_mutex);
+  mutex_init(&led_fade_mutex);
+  
   // core status indicator
   if (LED_EN) {
     pinMode(LED_PIN, OUTPUT);
@@ -110,9 +115,6 @@ void setup() {
   if (SENSOR_EN) {
     enable_internal_temperature_sensor();
   }
-
-  // initialize mutex
-  mutex_init(&serial_mutex);
 
   // initialize watchdog
   if (WDT_EN) {
