@@ -125,7 +125,13 @@ bool repeating_timer_callback(struct repeating_timer *t) {
     LED_FADE = (LED_FADE * 0.9) - 0.1;
     if (LED_FADE < 1) LED_FADE = 0;
     pinMode(LED_PIN, OUTPUT);
+    gpio_set_drive_strength(LED_PIN, GPIO_DRIVE_STRENGTH_12MA);
+    gpio_set_function(LED_PIN, GPIO_FUNC_PWM); // re-activate PWM output
     analogWrite(LED_PIN, (uint8_t)LED_FADE);
+    if (LED_FADE == 0) {
+      analogWrite(LED_PIN, -1); // turn off PWM
+      gpio_set_function(LED_PIN, GPIO_FUNC_SIO); // revert pin to SW control
+    }
   }
   return true;
 }
