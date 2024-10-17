@@ -124,6 +124,7 @@ bool repeating_timer_callback(struct repeating_timer *t) {
   if (LED_FADE > 0) {
     LED_FADE = (LED_FADE * 0.9) - 0.1;
     if (LED_FADE < 1) LED_FADE = 0;
+    pinMode(LED_PIN, OUTPUT);
     analogWrite(LED_PIN, (uint8_t)LED_FADE);
   }
   return true;
