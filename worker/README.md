@@ -97,7 +97,7 @@ Example:
 ## Raspberry Pi Pico
 Pico shall use `DuinoCoin_RPI_Pico_DualCore`. LLC is not needed as Pico logic level is same as ESP. The default I2C SCL frequency is 400KHz so use [DuinoI2C_ESP.ino.d1_mini.400K.bin](https://github.com/JK-Rolling/DuinoI2C_ESP/raw/main/esp8266/DuinoI2C_ESP.ino.d1_mini.400K.bin) as the master.
 
-Add `https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json` to `Additional Board Manager URLs` in Arduino IDE, then go to board manager and search for `Pico` and install board package from Earle Philhower.
+Add `https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json` to `Additional Board Manager URLs` in Arduino IDE, then go to board manager and search for `Pico` and install board package from Earle Philhower. Use version 3.6.3 for stable operation.
 
 Experiment the CPU clock frequencies ranging from 50-300MHz to find the sweet spot between job difficulty vs. hashrate. The CPU frequency recommended is 100MHz, which can be selected from Arduino IDE `Tools->CPU Speed`.
 > [!CAUTION]
