@@ -14,6 +14,7 @@
  *       3. Tools -> Boards -> Raspberry Pi RP2040 Boards -> Raspberry Pi Pico
  *       4. Tools -> CPU Speed -> 100MHz
  *       (tested version 2.2.1 at June 2022)
+ *       (tested version 3.6.3 at Oct 2024)
  * 
  * > I2C0_SDA  / I2C0_SCL / I2C1_SDA / I2C1_SCL
  *    >> Description:
