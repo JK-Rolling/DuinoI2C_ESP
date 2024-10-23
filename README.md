@@ -11,7 +11,8 @@ This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and
 7. **Breathing LED**. Onboard LED will indicate if the ESP is running happily.
 8. **Dark ambient friendly**. Control the brightness of the OLED, turn ON/OFF the OLED, onboard LED, and worker LED at will from your phone/computer.
 9. **ESP Restart**. Any time when ESP act abnormally, restart it with a click of a button or from your phone/computer.
-10. **CRC8 Integrity**. I2C communication between ESP and AVR is CRC8 protected to ensure data is corruption free
+10. **CRC8 Integrity**. I2C communication between ESP and AVR is CRC8 protected to ensure data is corruption free.
+11. **Dynamic/Static IP**. Trouble free to access ESP via mDNS or static IP address.
 
 *\*[Unlocked](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266#unlock-key). For Locked firmware, free up to 3 workers*
 
