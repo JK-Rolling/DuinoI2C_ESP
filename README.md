@@ -36,6 +36,11 @@ See [esp8266](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266) sect
 ## AVR Setup
 See [worker](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/worker) section of this repository.
 
+## Actual Rig Design
+The passionate community members designed awesome looking and fully functional mining rig. You may view them and even purchase them! 
+
+👉 Do check out [#mining-rig](https://github.com/JK-Rolling/DuinoI2C_ESP/discussions?discussions_q=label%3Amining-rig) section.
+
 ## Example Rig
 Pull-up resistor is highly recommended but not compulsory. YMMV. 
 
