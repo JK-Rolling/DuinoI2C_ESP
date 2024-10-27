@@ -121,7 +121,7 @@ DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ES
 1. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.235:54321/firmware` *Replace the IP with your ESP IP*
 2. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
 3. Under firmware, click `Choose file`
-4. Select `httpUpdateServer.ino.esp01.bin.gz`
+4. Select `httpUpdateServer.ino.esp01.bin.gz` or compile one yourself from [httpUpdateServer](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/httpUpdateServer)
 5. Click `Update Firmware` and wait around 20s. You should see constant ON LED when WiFi is connected. If the LED stay blinking for more than 1 minute, try bring it closer to the WiFi router and restart the ESP. If still fail, the ESP may need to be updated using cable approach.
 6. Repeat step 1-3
 7. Select `DuinoI2C_ESP.ino.esp01.ota.bin.gz`
@@ -202,4 +202,4 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 |2|Black OLED screen after FWU|Non-issue|FWU usually takes around 15 seconds to reboot once new firmware is received|
 |3|Discontinuity in webserial share count print|The free heap is running too low|Non-essential task, in this case webserial print is suspended. It'll auto resume once the free heap is back to healthy level|
 |4|Frequent worker restart|Likely due to too many workers causing the ESP to ran out of heap memory|Either reduce worker count or redistribute workers to other ESP. Avoid using webserial|
-|5|Worker not detected|Something went wrong in the I2C bus or worker|Load [i2c_scanner](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/i2c_scanner) into ESP to check the I2C bus and worker health|
+|5|Worker not detected|Something went wrong in the I2C bus or worker|Load [i2c_scanner](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/i2c_scanner) into ESP to check the I2C bus and worker health|
