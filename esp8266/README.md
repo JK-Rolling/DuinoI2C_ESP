@@ -17,27 +17,23 @@ This project currently supports the following ESP8266 devices:
 ### Corresponding `.bin` for the ESP8266
 |  | Adafruit Feather HUZZAH ESP8266 | ESP-01S (min. 1MB) | LOLIN(WEMOS) D1 R2 & mini |
 | :-: | :-: | :-: | :-: |
-| DuinoI2C_ESP.ino.d1_mini.bin | :x: | ❌ | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.400K.bin | :x: | ❌ | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ❌ | ✅ |
-| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ❌ | :x: |
-| DuinoI2C_ESP.ino.esp01.bin | :x: | ✅ | :x: |
-| DuinoI2C_ESP.ino.esp01.400K.bin | :x: | ✅ | :x: |
-| DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ (OTA) | :x: |
+| DuinoI2C_ESP.ino.d1_mini.bin | ❌ | ❌ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ❌ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.esp01.bin | ❌ | ✅ | ❌ |
+| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ✅ (OTA) | ❌ |
 
 > [!IMPORTANT]
-> ESP-01 with 1MB can use all esp01 .bin listed above but only filename with `ota` can perform over-the-air update successfully due to flash size limitation.
+> ESP-01 with 1MB can use all esp01 .bin listed above but only filename with `minimal` can perform 2 stages over-the-air update successfully due to flash size limitation.
 
 ## Feature
 ||SERIAL (500Kbps)|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|mDNS|OLED PWR via TXRX|Dim Worker LED|Breathing LED|Static IP|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | ✅ | :x: | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.TxRxPwr.bin | :x: | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | ✅ | ✅ | :x: | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz | ✅ | ✅ | :x: | ✅ | :x: | ✅ | :x: | ✅ |
-| DuinoI2C_ESP.ino.esp01.ota.bin.gz | :x: | ✅ | :x: | 100KHz | :x: | ✅ | ✅ | :x: | :x: | :x: | :x: | ✅ |
-| DuinoI2C_ESP.ino.esp01.400K.bin | ✅ | ✅ | ✅ | 400KHz | ✅ | ✅ | :x: | ✅ | :x: | ✅ | :x: | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.400K.bin | ✅ | ✅ | ✅ | 400KHz | ✅ | ✅ | ✅ | ✅ | :x: | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ✅ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ✅ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
 
 *Note: Contact me in official Duino-Coin [discord](https://discord.gg/duino-coin-677615191793467402) for custom feature combination or place your request in [discussion](https://github.com/JK-Rolling/DuinoI2C_ESP/discussions/2)*
 
@@ -47,7 +43,7 @@ This project currently supports the following ESP8266 devices:
 1. Navigate to the [esp8266](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266) section of this repository.
 2. Download the `.bin` file corresponding to your ESP8266 board to your local machine.
 
-*Note: If you want OTA for ESP01, use `DuinoI2C_ESP.ino.esp01.ota.bin.gz`*
+*Note: If you want OTA for ESP01, use `DuinoI2C_ESP.ino.esp01.minimal.bin.gz`*
 
 ### Uploading the `.bin` File to ESP8266
 There are 2 ways to upload the `.bin`. Web Browser is the easier way.
@@ -88,7 +84,21 @@ After flashing and powering on your ESP8266 for the first time, it will create a
 3. The web interface will allow you to configure your WiFi credentials, Duino username and mining key, optionally the firmware OTA credential (FWU - Firmware WiFi Update), and optionally configure static IP address.
 4. Click on Save button to store the inputs in ESP8266. The ESP should restart automatically and start working!
 
+
 <img src="assets/ui10.jpg" alt="ui10" width="20%"> --> <img src="assets/ui11.jpg" alt="ui11" width="20%"> --> <img src="assets/ui12.jpg" alt="ui12" width="20%"> --> <img src="assets/ui08.jpg" alt="ui08" width="20%"> --> <img src="assets/ui09.jpg" alt="ui09" width="20%"> --> <img src="assets/ui13.jpg" alt="ui13" width="20%"> --> <img src="assets/ui14.jpg" alt="ui14" width="20%">
+
+### Advanced Settings
+Usually default setting will work out-of-the-box. Refer table below for details.
+|Field|Description|
+|---|---|
+|Board Name|set mDNS to not memorize IP address. e.g. http://d1mini.local/. Except for `minimal`|
+|I2C Frequency|ESP I2C Frequency|
+|Job Difficulty|Choose the right diff so first few shares will not be rejected. `ARM` for RPi Pico|
+|Group Workers|Choose yes to combine workers into threads in webwallet|
+|LED GPIO|Refer to your ESP pinout for external LED|
+|OLED Piggyback|Only for D1 mini. Make sure to choose the right one!|
+|Host Version|Worker version reported to server|
+|Static IP|Set to assign ESP a static IP address|
 
 ## Control and Monitor DuinoI2C_ESP
 DuinoI2C_ESP web dashboard allow user to access the following
@@ -99,7 +109,7 @@ DuinoI2C_ESP web dashboard allow user to access the following
 * OLED power and brightness
 * ESP Restart
 
-*ESP01 opted OTA will only have Webserial and FWU only*
+*ESP01 opted `minimal` will only have Webserial and FWU only*
 
 <img src="assets/ui01.png" alt="ui01" width="50%">
 <img src="assets/ui02.png" alt="ui02" width="50%">
@@ -121,10 +131,10 @@ DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ES
 1. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.235:54321/firmware` *Replace the IP with your ESP IP*
 2. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
 3. Under firmware, click `Choose file`
-4. Select `httpUpdateServer.ino.esp01.bin.gz` or compile one yourself from [httpUpdateServer](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/httpUpdateServer)
+4. Select `httpUpdateServer.ino.esp01.bin.gz` or compile one yourself from [httpUpdateServer](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/httpUpdateServer). I find compile manually works best. Do remember to update SSID and password in the sketch.
 5. Click `Update Firmware` and wait around 20s. You should see constant ON LED when WiFi is connected. If the LED stay blinking for more than 1 minute, try bring it closer to the WiFi router and restart the ESP. If still fail, the ESP may need to be updated using cable approach.
 6. Repeat step 1-3
-7. Select `DuinoI2C_ESP.ino.esp01.ota.bin.gz`
+7. Select `DuinoI2C_ESP.ino.esp01.minimal.bin.gz`
 8. Repeat step 5. The ESP should start working again.
 
 ### CLI Update
@@ -161,12 +171,15 @@ Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto 
 
 For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini to source the power from the ESP serial pins, you may connect them by refering to the table below. Take note that `Serial` will be disabled in this use case. Also note that upload via USB/USB-Serial will not work if OLED VCC/GND is connected to RX/TX pin. Disconnect OLED to enable cable upload. If disconnecting OLED is not an option, use FWU instead.
 ### Connection Pinout (Powered from TX RX Pin)
-|| ESP8266 || OLED |
-|:-:| :----: | :----: |:-----: |
-|| TX | <---> | GND |
-|| RX | <---> | VCC |
-|`SCL`|D1 (GPIO5) | <---> | SCL |
-|`SDA`|D2 (GPIO4) | <---> | SDA |
+> [!IMPORTANT]
+> Make sure to choose the correct `OLED Piggyback` option from the Advanced settings page. Most OLED do not have reverse voltage protection!
+
+|| ESP8266 || OLED | OLED |
+|:-:| :----: | :----: |:-----: |:-----: |
+|| TX | <---> | GND | VCC |
+|| RX | <---> | VCC | GND |
+|`SCL`|D1 (GPIO5) | <---> | SCL | SCL |
+|`SDA`|D2 (GPIO4) | <---> | SDA | SDA |
 
 <img src="assets/wemos_txrxpwr.jpg" alt="wemos_txrxpwr" width="30%">  Image courtesy from jpx13
 
@@ -187,7 +200,7 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 > The unlock key can be reused for multiple ESP8266. One may use 3 workers/ESP without unlock key but may find the total cost is cheaper with unlock key
 
 ### BKM (Best Known Method)
-- Tested stable operation for 15 workers. Beyond that and up until 20, may need your help to find out as I ran out of AVR.
+- Tested stable operation for 15 workers. Beyond that and up until 20, may need your help to find out as I ran out of AVR. Use `minimal` .bin may help.
 - Keep an eye on the free heap as it may cause instability if too low. The firmware tried it's best to keep heap space available.
 - Turn off OLED from the web dashboard as updating screen means taking away 1-3% sharetime from one of the worker. Turn it back ON when needed, it saves power too.
 - Valid worker address range is 1-127 except 60 (0x3C). Only the first 20 workers will be used.
