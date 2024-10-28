@@ -27,7 +27,7 @@ This project currently supports the following ESP8266 devices:
 > ESP-01 with 1MB can use all esp01 .bin listed above but only filename with `minimal` can perform 2 stages over-the-air update successfully due to flash size limitation.
 
 ## Feature
-||SERIAL (500Kbps)|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|mDNS|OLED PWR via TXRX|Dim Worker LED|Breathing LED|Static IP|
+||SERIAL (500Kbps)|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|mDNS|OLED Piggyback|Dim Worker LED|Breathing LED|Static IP|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ✅ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
