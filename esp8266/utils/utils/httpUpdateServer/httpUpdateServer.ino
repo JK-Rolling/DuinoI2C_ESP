@@ -18,7 +18,7 @@ Instruction:
 #include <ESP8266HTTPUpdateServer.h>
 
 #define LED_PIN 2
-#define SERIAL_EN true
+#define SERIAL_EN false
 #define LED_EN true
 
 // User to replace wifi credential below
