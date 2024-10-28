@@ -96,7 +96,7 @@ Usually default setting will work out-of-the-box. Refer table below for details.
 |Job Difficulty|Choose the right diff so first few shares will not be rejected. `ARM` for RPi Pico|
 |Group Workers|Choose yes to combine workers into threads in webwallet|
 |LED GPIO|Refer to your ESP pinout for external LED|
-|OLED Piggyback|Only for D1 mini. Make sure to choose the right one!|
+|OLED Piggyback|Only for D1 mini. Make sure to choose the right one! Serial will not work here|
 |Host Version|Worker version reported to server|
 |Static IP|Set to assign ESP a static IP address|
 
