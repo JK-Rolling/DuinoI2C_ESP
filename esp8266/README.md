@@ -218,3 +218,4 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 |5|Worker not detected|Something went wrong in the I2C bus or worker|Load [i2c_scanner](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/i2c_scanner) into ESP to check the I2C bus and worker health|
 |6|ESP restarts itself|Ran out of memory|Recommended to use `minimal` .bin fw or reduce worker count to 10. You may request smaller footprint .bin from [Custom Feature Request](https://github.com/JK-Rolling/DuinoI2C_ESP/discussions/2)|
 |7|Web dashboard button not working|ESP is too far from router or the power supply is too weak|bring the ESP closer to the wifi router and make sure to use a good PSU. add capacitor for ESP-01s|
+|8|Seeing `-USER BANNED-` message|The username supplied is banned|Contact [duinocoin.com](https://duinocoin.com/contact) for more info|
