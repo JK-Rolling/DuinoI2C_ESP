@@ -1,7 +1,7 @@
 # DuinoI2C_ESP
 
 ## Overview
-DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266.
+DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266. Through experiment, it is observed that full featured .bin can run 15 workers while minimal .bin can run 20 workers.
 
 ## Version
 0.27
