@@ -73,7 +73,7 @@ For more help: Visit [espwebtool help](https://blog.spacehuhn.com/espwebtool)
 5. `esptool.exe --chip esp8266 --port COM4 --baud 115200 write_flash 0x00000 DuinoI2C_ESP.bin`. Replace COM port and .bin path to your actual one
 
 ##### >> Windows GUI
-Refer to [ESPGUITOOL](https://github.com/CGameDev/ESPGUITOOL). Thanks CGameDev!
+Refer to [ESPGUITOOL](https://github.com/CGameDev/ESPGUITOOL/releases). Thanks CGameDev!
 
 ## Configure DuinoI2C_ESP
 After flashing and powering on your ESP8266 for the first time, it will create a soft access point and launch a WiFi Manager web interface, allowing the user to configure it for proper operation. Note that ESP8266 will only work with 2.4GHz WiFi so the WiFi router may need to enable 2.4GHz if not done so already.
