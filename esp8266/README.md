@@ -33,7 +33,7 @@ This project currently supports the following ESP8266 devices:
 | DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ✅ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ✅ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ❌ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
 
 *Note: Contact me in official Duino-Coin [discord](https://discord.gg/duino-coin-677615191793467402) for custom feature combination or place your request in [discussion](https://github.com/JK-Rolling/DuinoI2C_ESP/discussions/2)*
 
