@@ -128,12 +128,12 @@ DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ES
 <img src="assets/ui03.png" alt="ui03" width="20%"> --> <img src="assets/ui04.png" alt="ui04" width="20%"> --> <img src="assets/ui05.png" alt="ui05" width="50%"> --> <img src="assets/ui06.png" alt="ui06" width="20%"> --> <img src="assets/ui07.png" alt="ui07" width="50%">
 
 ### ESP01 OTA (1MB)
-1. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.235:54321/firmware` *Replace the IP with your ESP IP*
-2. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
-3. Under firmware, click `Choose file`
-4. Select `httpUpdateServer.ino.esp01.bin.gz` or compile one yourself from [httpUpdateServer](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/httpUpdateServer). I find compile manually works best. Do remember to update SSID and password in the sketch.
+1. Compile interim firmware from [httpUpdateServer](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/httpUpdateServer). Do remember to update SSID and password in the sketch.
+2. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.235:54321/firmware` *Replace the IP with your ESP IP*
+3. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
+4. Under firmware, click `Choose file`
 5. Click `Update Firmware` and wait around 20s. You should see constant ON LED when WiFi is connected. If the LED stay blinking for more than 1 minute, try bring it closer to the WiFi router and restart the ESP. If still fail, the ESP may need to be updated using cable approach.
-6. Repeat step 1-3
+6. Repeat step 2-4
 7. Select `DuinoI2C_ESP.ino.esp01.minimal.bin.gz`
 8. Repeat step 5. The ESP should start working again.
 
