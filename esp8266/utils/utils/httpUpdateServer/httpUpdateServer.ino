@@ -9,7 +9,7 @@ Instruction:
     1. Open the sketch from Arduino IDE. Choose Tools --> Board --> ESP8266 Board --> Generic ESP8266 Module
     2. Go to menu. Sketch --> Export compiled Binary. or keyboard shortcut Ctrl+Alt+S
     3. (Optional) Compress the exported binary using Gzip with compression ratio 9 for best result
-    4. Visit the ESP-01S firmware update page. example: http://192.168.0.12:54321/firmware
+    4. Visit the ESP-01S firmware update page. example: http://192.168.0.12/firmware
     5. Select the .bin or .bin.gz (preferred) file for upload
 */
 
@@ -38,7 +38,7 @@ const char* password = "MY_PASSWORD";
 #define SERIALPRINTLN
 #endif
 
-ESP8266WebServer httpServer(54321);
+ESP8266WebServer httpServer(80);
 ESP8266HTTPUpdateServer httpUpdater;
 
 void setup() {
