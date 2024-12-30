@@ -212,7 +212,7 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 - Valid worker address range is 1-127 except 60 (0x3C). Only the first 20 workers will be used.
 - if the breathing LED hung, give it 1 minutes. If it doesn't continue breathing, reset the ESP.
 - Best ESP-worker combination per experiment is ESP 100KHz and Attiny85 400KHz. The KHz here refers to I2C clock frequency. This combo submit **8.6%** more accepted shares than ESP 100KHz and Attiny85 100KHz combo. Thanks jpx13 for collecting this data!
-
+- Best way to retrieve firmware version from minimal .bin is to use http://<your_esp_ipaddr>/GET_VER
 
 ## Bug and Known Issue
 ||Issue|Theory|Comment|
