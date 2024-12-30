@@ -1,10 +1,10 @@
 # DuinoI2C_ESP
 
 ## Overview
-DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266. Through experiment, it is observed that full featured .bin can run 15 workers while minimal .bin can run 20 workers.
+DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266. Through experiment, it is observed that full featured .bin can run 10 workers while minimal .bin can run 20 workers.
 
 ## Version
-0.27
+0.28
 
 ## Supported Devices
 This project currently supports the following ESP8266 devices:
@@ -15,13 +15,12 @@ This project currently supports the following ESP8266 devices:
 *Note: Additional devices may be added upon request. Limited to ESP8266 listed in Arduino IDE board manager*
 
 ### Corresponding `.bin` for the ESP8266
-|  | Adafruit Feather HUZZAH ESP8266 | ESP-01S (min. 1MB) | LOLIN(WEMOS) D1 R2 & mini |
-| :-: | :-: | :-: | :-: |
-| DuinoI2C_ESP.ino.d1_mini.bin | ❌ | ❌ | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ❌ | ✅ |
-| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ❌ | ❌ |
-| DuinoI2C_ESP.ino.esp01.bin | ❌ | ✅ | ❌ |
-| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ✅ (OTA) | ❌ |
+|  | ESP-01S (min. 1MB) | LOLIN(WEMOS) D1 R2 & mini | Nodemcu | Adafruit Feather HUZZAH ESP8266 |
+| :-: | :-: | :-: | :-: | :-: |
+| DuinoI2C_ESP.ino.esp01.bin | ✅ | ❌ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.d1_mini.bin | ❌ | ✅ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.nodemcu.bin | ❌ | ❌ | ✅ | ❌ |
+| DuinoI2C_ESP.ino.adafruit.bin | ❌ | ❌ | ❌ | ✅ |
 
 > [!IMPORTANT]
 > ESP-01 with 1MB can use all esp01 .bin listed above but only filename with `minimal` can perform 2 stages over-the-air update successfully due to flash size limitation.
@@ -29,11 +28,15 @@ This project currently supports the following ESP8266 devices:
 ## Feature
 ||SERIAL (500Kbps)|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|mDNS|OLED Piggyback|Dim Worker LED|Breathing LED|Static IP|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ✅ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ❌ | ❌ | 100KHz/400KHz | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.nodemcu.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.nodemcu.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+
 
 *Note: Contact me in official Duino-Coin [discord](https://discord.gg/duino-coin-677615191793467402) for custom feature combination or place your request in [discussion](https://github.com/JK-Rolling/DuinoI2C_ESP/discussions/2)*
 
@@ -109,7 +112,7 @@ DuinoI2C_ESP web dashboard allow user to access the following
 * OLED power and brightness
 * ESP Restart
 
-*ESP01 opted `minimal` will only have Webserial and FWU only*
+*ESP01 opted `minimal` will only have FWU only*
 
 <img src="assets/ui01.png" alt="ui01" width="50%">
 <img src="assets/ui02.png" alt="ui02" width="50%">
@@ -117,30 +120,33 @@ DuinoI2C_ESP web dashboard allow user to access the following
 ## Update DuinoI2C_ESP
 DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ESP8266 comes with 4MB onboard flash so both approach will work. ESP01 of 1MB however, need 2 steps approach for OTA.
 
+> [!NOTE]
+> `minimal.bin` will see different FWU web UI and no OLED OTA progress bar
+
 ### ESP8266 (4MB or more)
-1. Navigate to IP address of the ESP with any Internet browser and click `Upload` button
+1. Navigate to IP address of the ESP with any Internet browser and click `Update ESP` button
 2. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
-3. Under firmware, click `Choose file`
-4. Select your .bin file corresponding to your ESP
-5. Click `Update Firmware` and wait around 20s
+3. Click `Select file`
+4. Select your .bin or .bin.gz file corresponding to your ESP
+5. Click `Open` and wait around 20s
 6. The ESP should restart itself and start working. If it shows WiFi Manager screen, just repeat the WiFi setup step as before
 
-<img src="assets/ui03.png" alt="ui03" width="20%"> --> <img src="assets/ui04.png" alt="ui04" width="20%"> --> <img src="assets/ui05.png" alt="ui05" width="50%"> --> <img src="assets/ui06.png" alt="ui06" width="20%"> --> <img src="assets/ui07.png" alt="ui07" width="50%">
+<img src="assets/ui03.png" alt="ui03" width="20%"> --> <img src="assets/ui04.png" alt="ui04" width="20%"> --> <img src="assets/ui05.png" alt="ui05" width="20%"> --> <img src="assets/ui06.png" alt="ui06" width="20%"> --> <img src="assets/oled_ota.png" alt="oled_ota" width="20%">
 
 ### ESP01 OTA (1MB)
 1. Compile interim firmware from [httpUpdateServer](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/httpUpdateServer). Do remember to update SSID and password in the sketch.
-2. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.235:54321/firmware` *Replace the IP with your ESP IP*
+2. Navigate to FWU URL of the ESP with any Internet browser. Example: `http://192.168.0.219/firmware` *Replace the IP with your ESP IP*
 3. Sign in with username and password set during WiFi Manager setup. default username and password is `admin` `admin`
-4. Under firmware, click `Choose file`
-5. Click `Update Firmware` and wait around 20s. You should see constant ON LED when WiFi is connected. If the LED stay blinking for more than 1 minute, try bring it closer to the WiFi router and restart the ESP. If still fail, the ESP may need to be updated using cable approach.
-6. Repeat step 2-4
-7. Select `DuinoI2C_ESP.ino.esp01.minimal.bin.gz`
-8. Repeat step 5. The ESP should start working again.
+4. Click `Select file`
+5. Select your compiled .bin file from step 1
+6. Click `Open` and wait around 20s. You should see constant ON LED when WiFi is connected. If the LED stay blinking for more than 1 minute, try bring it closer to the WiFi router and restart the ESP. If still fail, the ESP may need to be updated using cable approach.
+6. Repeat step 2-5 with `DuinoI2C_ESP.ino.esp01.minimal.bin.gz`
+8. Repeat step 6. No OLED support in this interim firmware, so it's normal that the OLED screen seems stuck. The ESP should start working again in 20s.
 
 ### CLI Update
 The OTA update can be automated using script or command line from Linux terminal. 
 
-`curl -u admin:admin -F "image=@firmware.bin" http://192.168.0.235:54321/firmware`
+`curl -u admin:admin -F "image=@firmware.bin" http://192.168.0.219/firmware`
 
 ## OLED (Optional)
 Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto detected at address 0x3C. If the mining rig setup is using logic-level-shifter, it is recommended to connect the OLED to 3.3V side for both VCC and I2C SDA/SCL.
@@ -219,3 +225,4 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 |6|ESP restarts itself|Ran out of memory|Recommended to use `minimal` .bin fw or reduce worker count to 10. You may request smaller footprint .bin from [Custom Feature Request](https://github.com/JK-Rolling/DuinoI2C_ESP/discussions/2)|
 |7|Web dashboard button not working|ESP is too far from router or the power supply is too weak|bring the ESP closer to the wifi router and make sure to use a good PSU. add capacitor for ESP-01s|
 |8|Seeing `-USER BANNED-` message|The username supplied is banned|Contact [duinocoin.com](https://duinocoin.com/contact) for more info|
+|9|OTA progress bar stuck|ESP ran out of heap memory|Reset the ESP and redo the OTA as soon as ESP WiFi connection is established|
