@@ -214,6 +214,7 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 - if the breathing LED hung, give it 1 minutes. If it doesn't continue breathing, reset the ESP.
 - Best ESP-worker combination per experiment is ESP 100KHz and Attiny85 400KHz. The KHz here refers to I2C clock frequency. This combo submit **8.6%** more accepted shares than ESP 100KHz and Attiny85 100KHz combo. Thanks jpx13 for collecting this data!
 - Best way to retrieve firmware version from minimal .bin is to use http://<your_esp_ipaddr>/GET_VER
+- While fallback or downgrading is common practice, it was never supported due to potential changes in Settings. However, it should present you the wifi manager again in case of failure.
 
 ## Bug and Known Issue
 ||Issue|Theory|Comment|
