@@ -11,6 +11,7 @@ This project currently supports the following ESP8266 devices:
 - Adafruit Feather HUZZAH ESP8266
 - ESP-01S (min. 1MB)
 - LOLIN(WEMOS) D1 R2 & mini
+- Nodemcu 1.0
 
 *Note: Additional devices may be added upon request. Limited to ESP8266 listed in Arduino IDE board manager*
 
@@ -30,7 +31,7 @@ This project currently supports the following ESP8266 devices:
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.nodemcu.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.nodemcu.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
 | DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
