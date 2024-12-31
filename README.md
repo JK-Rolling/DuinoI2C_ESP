@@ -76,6 +76,6 @@ The graph shows a share rate of around 0.55 shares/worker from 2 to 20 workers. 
 <img src="resource/shrate_per_pico_worker.png" alt="shrate_per_worker" width="100%">
 
 ## Contact
-Official Duino-Coin Discord server: [discord.gg](https://discord.gg/duino-coin-677615191793467402) look for Developer:`JK Rolling` Beta Tester:`jpx13` `Dark_Hunter` `oxy`
+Official Duino-Coin Discord server: [discord.gg](https://discord.gg/duino-coin-677615191793467402) look for Developer:`JK Rolling` Beta Tester:`jpx13` `Dark_Hunter`
 
 Link to this page: https://bit.ly/DuinoI2C_ESP
