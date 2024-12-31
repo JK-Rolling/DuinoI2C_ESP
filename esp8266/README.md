@@ -118,6 +118,14 @@ DuinoI2C_ESP web dashboard allow user to access the following
 <img src="assets/ui01.png" alt="ui01" width="50%">
 <img src="assets/ui02.png" alt="ui02" width="50%">
 
+minimal.bin lacks web UI to control some feature but they can still be controlled by accessing the endpoint directly.
+|Feature|Endpoint|
+|---|---|
+|onboard LED|http://\<ipaddr\>/led_toggle|
+|OLED|http://\<ipaddr\>/oled_toggle|
+|ESP restart|http://\<ipaddr\>/restart|
+|FW version|http://\<ipaddr\>/GET_VER|
+
 ## Update DuinoI2C_ESP
 DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ESP8266 comes with 4MB onboard flash so both approach will work. ESP01 of 1MB however, need 2 steps approach for OTA.
 
