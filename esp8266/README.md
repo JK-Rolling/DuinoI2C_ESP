@@ -53,7 +53,7 @@ This project currently supports the following ESP8266 devices:
 There are 2 ways to upload the `.bin`. Web Browser is the easier way.
 
 #### > Web Browser
-1. Visit https://esp.huhn.me/
+1. Visit https://esp.huhn.me/ or https://espressif.github.io/esptool-js/
 2. Click `CONNECT` button
 3. Select the ESP8266 and click `Connect`
 4. On first row, click `SELECT`, then browse to the .bin file downloaded
