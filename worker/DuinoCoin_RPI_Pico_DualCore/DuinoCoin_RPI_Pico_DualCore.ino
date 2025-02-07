@@ -42,6 +42,7 @@ extern "C" {
 #define SENSOR_EN                   true
 #define SINGLE_CORE_ONLY            false               // >>> see kdb before setting it to true <<<
 #define WORKER_NAME                 "rp2040"
+#define RP2040_ZERO                 false               // >>> see kdb before setting it to true <<<
 /****************** USER MODIFICATION END ******************/
 /*---------------------------------------------------------*/
 /****************** FINE TUNING START **********************/

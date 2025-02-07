@@ -103,4 +103,11 @@
  *    >> Description:
  *       Python will read this name and print on screen before worker start
  *       put a unique name if needed, else no harm done if untouched
+ *
+ * > RP2040_ZERO
+ *    >> Description:
+ *       The RP2040-Zero (the mini one) has a builtin Neopixel Led. To work with it you have
+ *       to set this to true, otherwise the led do not work at all. Then you can set GRB channels
+ *       to identify each core activity
+ *
  */
