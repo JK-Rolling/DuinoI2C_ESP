@@ -131,19 +131,17 @@
    if (!LED_EN) return;
    uint8_t core = get_core_num();
    uint8_t state = LOW;
-   sleep_ms(50);
  
-   for (int x = 0; x < (count); ++x) {
+   for (int x = 0; x < (count << 1); ++x) {
      #if RP2040_ZERO
+       sleep_ms(50);
        p.neoPixelFill(ledState[core].green, ledState[core].red, ledState[core].blue, true);
        sleep_ms(50);
        p.neoPixelClear(true);
      #else
        analogWrite(pin, state ^= LED_BRIGHTNESS);
        sleep_ms(50);
-       analogWrite(pin, state ^= LED_BRIGHTNESS);
      #endif
-     sleep_ms(50);
    }
  }
  
@@ -169,7 +167,7 @@
        #if RP2040_ZERO
          p.neoPixelClear(true);
        #else
-         analogWrite(LED_PIN, 0);
+         analogWrite(LED_PIN, -1);
          gpio_set_function(LED_PIN, GPIO_FUNC_SIO);
        #endif
      }
