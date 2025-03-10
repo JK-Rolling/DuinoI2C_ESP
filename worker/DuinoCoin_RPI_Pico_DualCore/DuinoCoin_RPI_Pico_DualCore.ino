@@ -46,7 +46,11 @@ extern "C" {
 /****************** USER MODIFICATION END ******************/
 /*---------------------------------------------------------*/
 /****************** FINE TUNING START **********************/
-#define LED_PIN                     LED_BUILTIN
+#if RP2040_ZERO
+  #define LED_PIN                     25
+#else
+  #define LED_PIN                     LED_BUILTIN
+#endif
 #define LED_BRIGHTNESS              255                 // 1-255
 #define BLINK_SHARE_FOUND           1
 #define BLINK_SETUP_COMPLETE        2

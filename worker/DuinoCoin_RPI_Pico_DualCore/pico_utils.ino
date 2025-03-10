@@ -127,7 +127,7 @@
  };
  
  
- void Blink(uint8_t count, uint8_t pin = LED_BUILTIN) {
+ void Blink(uint8_t count, uint8_t pin = LED_PIN) {
    if (!LED_EN) return;
    uint8_t core = get_core_num();
    uint8_t state = LOW;
