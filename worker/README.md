@@ -119,9 +119,8 @@ Example:
 |Picox|X|1|2*X+`I2CS_START_ADDRESS`+1|
 ```C
 /****************** USER MODIFICATION START ****************/
-#define DEV_INDEX                   10
+#define DEV_INDEX                   0
 #define I2CS_START_ADDRESS          8
-#define I2CS_FIND_ADDR              false               // >>> see kdb before setting it to true <<<
 #define WIRE_CLOCK                  400000              // >>> see kdb before changing this I2C clock frequency <<<
 #define I2C0_SDA                    20
 #define I2C0_SCL                    21
@@ -134,6 +133,7 @@ Example:
 #define SENSOR_EN                   true
 #define SINGLE_CORE_ONLY            false               // >>> see kdb before setting it to true <<<
 #define WORKER_NAME                 "rp2040"
+#define NEOPIXEL_EN                 false               // >>> see kdb before setting it to true <<<
 /****************** USER MODIFICATION END ******************/
 ```
 
@@ -143,7 +143,7 @@ Example:
   |-----------------------------------------------------------|----------|-----------------------------------|-------------------|
   | Arduino Pro Mini, Uno, Nano etc.<br>(Atmega 328p/pb/16u2) |   16MHz  | 340 H/s                           | 1                 |
   | ATtiny85                                                  |  16.5MHz | 340 H/s                           | 1                 |
-  | RP2040                                                    |  100MHz  | 4-5 KH/s                          | 2                 |
+  | RP2040                                                    |  150MHz  | 20 KH/s                           | 2                 |
 
 ## Showcasing Ready Made Mining Rig - Cytron Maker Pi Pico
 <img src="assets/makerPiPico.png" alt="makerPiPico" width="50%">
