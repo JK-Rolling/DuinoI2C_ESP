@@ -12,9 +12,9 @@
  *          type "RP2040" in search box and select board from Earle F. Philhower, III
  *          click "Install"
  *       3. Tools -> Boards -> Raspberry Pi RP2040 Boards -> Raspberry Pi Pico
- *       4. Tools -> CPU Speed -> 100MHz
+ *       4. Tools -> CPU Speed -> 150MHz (22KH/s), 133MHz (20KH/s)
  *       (tested version 2.2.1 at June 2022)
- *       (tested version 3.9.5 at Oct 2024)
+ *       (tested version 3.9.5 at Mar 2025)
  * 
  * > I2C0_SDA  / I2C0_SCL / I2C1_SDA / I2C1_SCL
  *    >> Description:
@@ -104,9 +104,10 @@
  *       Python will read this name and print on screen before worker start
  *       put a unique name if needed, else no harm done if untouched
  *
- * > RP2040_ZERO
+ * > NEOPIXEL_EN
+ *    >> Pre-requisite: LED_EN must set to 'true'
  *    >> Description:
- *       The RP2040-Zero (the mini one) has a builtin Neopixel Led. To work with it you have
+ *       The RP2040-Zero (the mini one) and Cytron Maker Pi RP2040 has a builtin Neopixel Led. To work with it you have
  *       to set this to true, otherwise the led do not work at all. Then you can set GRB channels
  *       to identify each core activity
  *
