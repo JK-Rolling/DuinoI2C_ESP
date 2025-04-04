@@ -7,11 +7,12 @@ Worker is only responsible to receive job from ESP, find the result, and return 
 > If you came from [DuinoCoinI2C](https://github.com/JK-Rolling/DuinoCoinI2C), make sure to reflash the worker with sketch from this repo. They are not backward compatible due to performance reason
 
 ## Supported Devices
-|| UNO | NANO | Pro Mini | Atmel ATTiny85 | Pico RP2040 |
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| DuinoCoinI2C_Tiny_Slave | ✅ | ✅ | ✅ | :x: | :x: |
-| DuinoCoinI2C_ATTiny_Slave | :x: | :x: | :x: | ✅ | :x: |
-| DuinoCoin_RPI_Pico_DualCore | :x: | :x: | :x:| :x: | ✅ | 
+|| UNO | NANO | Pro Mini | Atmel ATTiny85 | Pico RP2040 | Atmel ATTiny45 |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| DuinoCoinI2C_Tiny_Slave | ✅ | ✅ | ✅ | :x: | :x: | :x: |
+| DuinoCoinI2C_ATTiny_Slave | :x: | :x: | :x: | ✅ | :x: | :x: |
+| DuinoCoin_RPI_Pico_DualCore | :x: | :x: | :x:| :x: | ✅ | :x: |
+| DuinoI2C_ATTinyX5 | ✅ | ✅ | ✅ | ✅ | :x: | ✅ |
 
 ## Library Dependency
 * [ArduinoUniqueID](https://github.com/ricaun/ArduinoUniqueID) (Handle the chip ID)
@@ -53,21 +54,21 @@ Example:
 /****************** USER MODIFICATION END ******************/
 ```
 
-## Atmel ATTiny85 - ATTiny_Slave
-Use `DuinoCoinI2C_ATTiny_Slave` for ATtiny85. LLC is required if worker and host is operating at different voltage. 4k7 pullup resistors for `SDA/SCL` pins are strongly recommended. The TWI/I2C/IIC seems to work well with SCL 100KHz `WIRE_CLOCK 100000`.
+## Atmel ATTiny45/85 - ATTinyX5
+Use `DuinoCoinI2C_ATTiny_Slave` for ATtiny85 or `DuinoI2C_ATTinyX5` for ATtiny45/85. LLC is required if worker and host is operating at different voltage. 4k7 pullup resistors for `SDA/SCL` pins are strongly recommended. The TWI/I2C/IIC seems to work well with SCL 100KHz `WIRE_CLOCK 100000`.
 
-ATtiny85 pin PB1 is using PWM to drive connected LED so resistor may be optional. In the case where resistor is necessary, use this equation to calculate the resistance. `R = (Vs - Vf) / If`. For LED of 2V forward voltage and 20mA, 5V may get 150 Ohm, 3.3V may get 65 Ohm. One may use higher value resistance where no exact resistor matches the calculated value.
+ATtiny45/85 pin PB1 is using PWM to drive connected LED so resistor may be optional. In the case where resistor is necessary, use this equation to calculate the resistance. `R = (Vs - Vf) / If`. For LED of 2V forward voltage and 20mA, 5V may get 150 Ohm, 3.3V may get 65 Ohm. One may use higher value resistance where no exact resistor matches the calculated value.
 
 Add `http://drazzy.com/package_drazzy.com_index.json`(broken?) or `https://github.com/SpenceKonde/ReleaseScripts/raw/refs/heads/master/package_drazzy.com_index.json` to `Additional Board Manager URLs` in Arduino IDE, then go to board manager and search for `attiny` and install ATTinyCore from Spence Konde.
 
-ATTiny85 default system clock is 1MHz. This needs to be changed to get good hashrate. This sketch is applicable to Adafruit Trinket ATtiny85 too but the bootloader will be removed during fuse update to regain full 8KB flash capacity.
+ATTiny45/85 default system clock is 1MHz. This needs to be changed to get good hashrate. This sketch is applicable to Adafruit Trinket ATtiny85 too but the bootloader will be removed during fuse update to regain full 8KB flash capacity.
 
 You may use dedicated ATTiny programmer or any Uno/Nano to set the fuse via `Tools --> Burn Bootloader`. See table below on setting that worked for me on ATtiny85. Make sure the `Tools --> Programmer --> Arduino as ISP` is selected. Finally upload sketch using `Sketch --> Upload Using Programmer`.
 
 |Attribute|Value|
 |:-|:-|
 |Board|ATtiny25/45/85 (No Bootloader)|
-|Chip|ATtiny85|
+|Chip|ATtiny45 or ATtiny85|
 |Clock Source|16.5 MHz (PLL,tweaked)|
 |Timer 1 Clock|CPU|
 |LTO|Enabled|
@@ -76,7 +77,7 @@ You may use dedicated ATTiny programmer or any Uno/Nano to set the fuse via `Too
 |B.O.D Level|Disabled|
 
 ### I2C Address
-Increment the `ADDRESS_I2C` per device and upload.
+Increment the `ADDRESS_I2C` or `I2C_AD` per device and upload.
 
 Example:
 ||`ADDRESS_I2C`|I2C address|
@@ -142,7 +143,8 @@ Example:
   | Device                                                    | CPU Freq | Average hashrate<br>(all threads) | Mining<br>threads |
   |-----------------------------------------------------------|----------|-----------------------------------|-------------------|
   | Arduino Pro Mini, Uno, Nano etc.<br>(Atmega 328p/pb/16u2) |   16MHz  | 340 H/s                           | 1                 |
-  | ATtiny85                                                  |  16.5MHz | 340 H/s                           | 1                 |
+  | ATtiny45                                                  |  16.5MHz | 315 H/s                           | 1                 |
+  | ATtiny85                                                  |  16.5MHz | 330 H/s                           | 1                 |
   | RP2040                                                    |  150MHz  | 20 KH/s                           | 2                 |
 
 ## Showcasing Ready Made Mining Rig - Cytron Maker Pi Pico
