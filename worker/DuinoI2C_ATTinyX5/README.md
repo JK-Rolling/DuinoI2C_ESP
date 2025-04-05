@@ -30,7 +30,7 @@ So I created this plan below to design the sketch. (actually, it is to save my e
 
 [buffer reuse plan](https://docs.google.com/spreadsheets/d/1Yyu-0IxRnCqxKkMdPkqeNmSFGH9hO1d0EoCNjY_SVLw/edit?usp=sharing)
 
-<img src="DuinoI2C_ATTinyX5/buffer.png" alt="buffer plan" width=100%>
+<img src="buffer.png" alt="buffer plan" width=100%>
 
 ## Credits
 * Duino-Coin team for the SHA1 hasher
