@@ -22,6 +22,10 @@ You may customize feature based on your need. To save memory (disable all), shor
 /****************** FINE TUNING END ************************/
 ```
 
+## Statistic
+* All feature disabled - compiled to 3686 bytes flash 188 bytes ram
+* All feature enabled (except dim) - 4034 bytes flash 196 bytes ram
+* Hashrate - ATTiny 315H/s at CPU frequency of 16.5MHz. You may boost hashrate to 381H/s (theoretically) by using 20MHz external crystal.
 
 ## Buffer reuse plan
 As ATTiny45 only has 256 bytes of SRAM, there is not a lot of room to work. 
