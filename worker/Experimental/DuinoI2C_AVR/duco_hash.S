@@ -138,6 +138,7 @@ SHA1_HASH_BITS = 160
 
 ; global variable
 .section .data
+
 .align 2
 .global w10
 w10:
@@ -148,6 +149,11 @@ w10:
 tempState:
   .space 20  ; 5 words x 4 bytes
 
+.align 2
+.global tempWord
+tempWord:
+  .space 4 ; 1 word x 4 bytes
+
 .section .text
 
 SPL = 0x3D
@@ -156,6 +162,8 @@ SREG = 0x3F
 
 xtmp = 0
 xNULL = 1
+TW1 = 6
+TW2 = 7
 TS1 = 8
 TS2 = 9
 W1 = 10
@@ -222,20 +230,16 @@ sha1_ctx2hash:
 ; this function calculate and store first 40 chars state and digest
 ; param1: the 16-bit pointer to message (last_hash)
 ; param1 is given in r25:r24 (r25 is the most significant)
-; 
-; status: functional but performance is bad
-; C code - 24us
-; this code - 428us
-; TODO: for future enhancement. area to optimize - reading IV and K from flash once only
 duco_hash_init:
   ; TODO: backup registers, stack pointer
   push r28         ; save Y low
   push r29         ; save Y high
+  push r12
   
   movw r12, r24 /* backup of msg pointer */
 
   ; update X to point to tempState
-  ; rcall sha1_iv_init to copy IV from flash into tempState
+  ; rcall sha1_iv_init to copy IV from ram into tempState
   ldi r24, lo8(tempState)
   ldi r25, hi8(tempState)
   rcall sha1_iv_init
@@ -269,9 +273,9 @@ sha1_prehash_loop:
   lsl S
   andi S, 0x24 /* S is a bytepointer so x4, also limit the valid range to 36*/
   /* load w10[S] */
-  movw r26, W1
-  add r26, S /* X points at w10[S] */
-  adc r27, xNULL
+  movw XL, W1
+  add XL, S /* X points at w10[S] */
+  adc XH, xNULL
   ld T1, X+
   ld T2, X+
   ld T3, X+
@@ -279,7 +283,43 @@ sha1_prehash_loop:
 
   cpi LoopC, 10
   brlt sha1_prehash_loop_core
-  ; save digest
+  /* update w[s] */
+  ldi tmp1, 2*4
+  rcall 1f
+  ldi tmp1, 8*4
+  rcall 1f
+  ldi tmp1, 13*4
+  rcall 1f
+  rjmp 2f
+1:    /* this might be "outsourced" to save the jump above */
+  add tmp1, S
+  andi tmp1, 0x3f
+  movw r26, W1
+  add r26, tmp1
+  adc r27, xNULL
+  ld tmp2, X+
+  eor T1, tmp2
+  ld tmp2, X+
+  eor T2, tmp2
+  ld tmp2, X+
+  eor T3, tmp2
+  ld tmp2, X+
+  eor T4, tmp2
+  ret
+2:  /* now we just hav to do a ROTL(T) and save T back */
+  mov tmp2, T4
+  rol tmp2
+  rol T1
+  rol T2
+  rol T3
+  rol T4
+  movw r26, W1
+  add r26, S
+  adc r27, xNULL
+  st X+, T1
+  st X+, T2
+  st X+, T3
+  st X+, T4
 
 sha1_prehash_loop_core:
   /* T=ROTL5(a) + e + w10[LoopC] */
@@ -289,6 +329,9 @@ sha1_prehash_loop_core:
   movw TS1, XL /* save pointer to tempState */
   ;sbiw XL, 4*1 /* X points at a[4] aka e */
   adiw XL, 4*4  /* X points at tempState[4] aka e */
+  ldi YL, lo8(tempWord)
+  ldi YH, hi8(tempWord) /* save pointer to tempWord */
+  movw TW1, YL /* Y points to tempWord */
   ; load and add e
   ld tmp1, X+
   add T1, tmp1
@@ -301,7 +344,7 @@ sha1_prehash_loop_core:
 
   ; load a
   ;sbiw r26, 4*5   /* X points at a[0] aka a */
-  movw r26, TS1  /* X points to a[0] aka a */
+  movw XL, TS1  /* X points to a[0] aka a */
   ld F1, X+
   ld F2, X+
   ld F3, X+
@@ -324,26 +367,23 @@ sha1_prehash_loop_core:
   adc T3, F3
   adc T4, F4 /* T = ROTL(a,5) + e + w[s] */
 
-  ; ---- f = (b & c) | (~b & d) ----
-  ;movw r28, r26   ; Y = pointer to a[1] (b)
-  movw r28, TS1   
-  adiw r28, 4*2  ; Y = pointer to a[1] (b)
-  ld tmp1, Y+     ; b
-  mov tmp2, tmp1
-  com tmp2        ; ~b
-  ldd tmp3, Y+3   ; c
-  and tmp1, tmp3  ; b & c
-  ldd tmp3, Y+7   ; d
-  and tmp2, tmp3  ; ~b & d
-  eor tmp1, tmp2  ; f result in tmp1
-  
-  ; ---- Add f to T ----
-  add T1, tmp1
-  adc T2, r1
-  adc T3, r1
-  adc T4, r1
+  movw YL, TS1   
+  adiw YL, 1*4  ; Y = pointer to a[1] (b)
+  rcall sha1_nextBlock_Ch
+  mov F1, tmp1
+  rcall sha1_nextBlock_Ch
+  mov F2, tmp1
+  rcall sha1_nextBlock_Ch
+  mov F3, tmp1
+  rcall sha1_nextBlock_Ch
+
+  add T1, F1
+  adc T2, F2
+  adc T3, F3
+  adc T4, tmp1
   
   ; ---- Add K = sha1_nextBlock_KTable[0] = 0x5A827999 ----
+  ; Add constant K = 0x5A827999
   ldi ZL, lo8(sha1_nextBlock_KTable)
   ldi ZH, hi8(sha1_nextBlock_KTable)
   lpm tmp1, Z+
@@ -354,14 +394,14 @@ sha1_prehash_loop_core:
   adc T3, tmp1
   lpm tmp1, Z+
   adc T4, tmp1
+
  /* T = ROTL5(a) + f_t(b,c,d) + e + k_t + w[s] */
          /* X points still at a[1] aka b, Y points at a[2] aka c */
   /* update a[] */
 sha1_prehash_update_a:
   /*first we move all vars in a[] "one up" e=d, d=c, c=b, b=a*/
   movw r28, TS1
-  adiw r28, 3*4  /* Y should point at a[4] aka e */
-  ;sbiw r28, 4
+  adiw r28, 4*4 /* Y should point at a[4] aka e */
 
   ldi tmp2, 4*4
 1:
@@ -370,21 +410,20 @@ sha1_prehash_update_a:
   dec tmp2
   brne 1b
   /* Y points at a[0] aka a*/
-
-  movw r28, W1
-  sbiw r28, 5*4
+  movw r28, TS1
   /* store T in a[0] aka a */
   st Y+, T1
   st Y+, T2
   st Y+, T3
   st Y+, T4
   /* Y points at a[1] aka b*/
-
+  
   /* rotate c */
   ldd T1, Y+1*4
   ldd T2, Y+1*4+1
   ldd T3, Y+1*4+2
   ldd T4, Y+1*4+3
+
   mov tmp1, T1
   ldi tmp2, 2
 1:  ror tmp1
@@ -398,13 +437,24 @@ sha1_prehash_update_a:
   std Y+1*4+1, T2
   std Y+1*4+2, T3
   std Y+1*4+3, T4
+  /*jk rotl(30, c) validated ok! */
+
+  ;jk{
+  ;movw YL, TW1
+  ;st Y+, T1
+  ;st Y+, T2
+  ;st Y+, T3
+  ;st Y+, T4
+  ;jmp duco_hash_init_epilog
+  ;}jk
 
   inc LoopC
-  cpi LoopC, 20
+  cpi LoopC, 10
   brge duco_hash_init_epilog
   rjmp sha1_prehash_loop
 
 duco_hash_init_epilog:
+  pop r12
   pop r29          ; restore Y high
   pop r28          ; restore Y low
   ret
