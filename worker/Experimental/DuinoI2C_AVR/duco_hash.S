@@ -149,6 +149,7 @@ w10:
 tempState:
   .space 20  ; 5 words x 4 bytes
 
+; jk:debug use
 .align 2
 .global tempWord
 tempWord:
@@ -266,12 +267,15 @@ duco_hash_init:
 
   ; clr LoopC /* LoopC is already 0 anyway. LoopC is t in FIPS 180-2 */
   clr xtmp
+  ldi YL, lo8(tempWord)
+  ldi YH, hi8(tempWord) /* save pointer to tempWord */
+  movw TW1, YL /* Y points to tempWord */
+  
 sha1_prehash_loop:
   ; execute first 10 loops of sha-1 round function
   mov S, LoopC
   lsl S
   lsl S
-  andi S, 0x24 /* S is a bytepointer so x4, also limit the valid range to 36*/
   /* load w10[S] */
   movw XL, W1
   add XL, S /* X points at w10[S] */
@@ -281,46 +285,6 @@ sha1_prehash_loop:
   ld T3, X+
   ld T4, X+
 
-  cpi LoopC, 10
-  brlt sha1_prehash_loop_core
-  /* update w[s] */
-  ldi tmp1, 2*4
-  rcall 1f
-  ldi tmp1, 8*4
-  rcall 1f
-  ldi tmp1, 13*4
-  rcall 1f
-  rjmp 2f
-1:    /* this might be "outsourced" to save the jump above */
-  add tmp1, S
-  andi tmp1, 0x3f
-  movw r26, W1
-  add r26, tmp1
-  adc r27, xNULL
-  ld tmp2, X+
-  eor T1, tmp2
-  ld tmp2, X+
-  eor T2, tmp2
-  ld tmp2, X+
-  eor T3, tmp2
-  ld tmp2, X+
-  eor T4, tmp2
-  ret
-2:  /* now we just hav to do a ROTL(T) and save T back */
-  mov tmp2, T4
-  rol tmp2
-  rol T1
-  rol T2
-  rol T3
-  rol T4
-  movw r26, W1
-  add r26, S
-  adc r27, xNULL
-  st X+, T1
-  st X+, T2
-  st X+, T3
-  st X+, T4
-
 sha1_prehash_loop_core:
   /* T=ROTL5(a) + e + w10[LoopC] */
   ; point X to IV
@@ -329,9 +293,20 @@ sha1_prehash_loop_core:
   movw TS1, XL /* save pointer to tempState */
   ;sbiw XL, 4*1 /* X points at a[4] aka e */
   adiw XL, 4*4  /* X points at tempState[4] aka e */
-  ldi YL, lo8(tempWord)
-  ldi YH, hi8(tempWord) /* save pointer to tempWord */
-  movw TW1, YL /* Y points to tempWord */
+
+//  ;jk{
+//  push YH
+//  push YL
+//  movw YL, TW1
+//  st Y+, T1
+//  st Y+, T2
+//  st Y+, T3
+//  st Y+, T4
+//  pop YL
+//  pop YH
+//  ;jmp duco_hash_init_epilog
+//  ;}jk
+  
   ; load and add e
   ld tmp1, X+
   add T1, tmp1
@@ -382,7 +357,6 @@ sha1_prehash_loop_core:
   adc T3, F3
   adc T4, tmp1
   
-  ; ---- Add K = sha1_nextBlock_KTable[0] = 0x5A827999 ----
   ; Add constant K = 0x5A827999
   ldi ZL, lo8(sha1_nextBlock_KTable)
   ldi ZH, hi8(sha1_nextBlock_KTable)
@@ -395,14 +369,13 @@ sha1_prehash_loop_core:
   lpm tmp1, Z+
   adc T4, tmp1
 
- /* T = ROTL5(a) + f_t(b,c,d) + e + k_t + w[s] */
-         /* X points still at a[1] aka b, Y points at a[2] aka c */
+  /* T = ROTL5(a) + f_t(b,c,d) + e + k_t + w[s] */
+  /* X points still at a[1] aka b, Y points at a[2] aka c */
   /* update a[] */
 sha1_prehash_update_a:
   /*first we move all vars in a[] "one up" e=d, d=c, c=b, b=a*/
   movw r28, TS1
   adiw r28, 4*4 /* Y should point at a[4] aka e */
-
   ldi tmp2, 4*4
 1:
   ld tmp1, -Y
@@ -411,13 +384,14 @@ sha1_prehash_update_a:
   brne 1b
   /* Y points at a[0] aka a*/
   movw r28, TS1
+
   /* store T in a[0] aka a */
   st Y+, T1
   st Y+, T2
   st Y+, T3
   st Y+, T4
-  /* Y points at a[1] aka b*/
   
+  /* Y points at a[1] aka b*/
   /* rotate c */
   ldd T1, Y+1*4
   ldd T2, Y+1*4+1
@@ -438,15 +412,6 @@ sha1_prehash_update_a:
   std Y+1*4+2, T3
   std Y+1*4+3, T4
   /*jk rotl(30, c) validated ok! */
-
-  ;jk{
-  ;movw YL, TW1
-  ;st Y+, T1
-  ;st Y+, T2
-  ;st Y+, T3
-  ;st Y+, T4
-  ;jmp duco_hash_init_epilog
-  ;}jk
 
   inc LoopC
   cpi LoopC, 10
