@@ -232,10 +232,15 @@ sha1_ctx2hash:
 ; param1: the 16-bit pointer to message (last_hash)
 ; param1 is given in r25:r24 (r25 is the most significant)
 duco_hash_init:
-  ; TODO: backup registers, stack pointer
-  push r28         ; save Y low
-  push r29         ; save Y high
-  push r12
+duco_hash_prolog:
+  push  r13 
+  push  r14 
+  push  r15 
+  push  r16
+  in r18, SPL
+  push r18
+  in r18, SPH
+  push r18
   
   movw r12, r24 /* backup of msg pointer */
 
@@ -291,7 +296,6 @@ sha1_prehash_loop_core:
   ldi XL, lo8(tempState)
   ldi XH, hi8(tempState)
   movw TS1, XL /* save pointer to tempState */
-  ;sbiw XL, 4*1 /* X points at a[4] aka e */
   adiw XL, 4*4  /* X points at tempState[4] aka e */
 
 //  ;jk{
@@ -419,11 +423,82 @@ sha1_prehash_update_a:
   rjmp sha1_prehash_loop
 
 duco_hash_init_epilog:
-  pop r12
-  pop r29          ; restore Y high
-  pop r28          ; restore Y low
+  pop r18
+  out SPH, r18
+  pop r18
+  out SPL, r18
+  pop r16
+  pop r15 
+  pop r14 
+  pop r13 
   ret
 
+;###########################################################
+
+; this function finishes the remaining 69 loops of sha-1 hashing
+; pre-requisite: run duco_hash_init with last_hash to setup w10 and tempState
+;
+; param1: the 16-bit pointer to message (buffer)
+; param1 is given in r25:r24 (r25 is the most significant)
+; param2: the 16-bit pointer to nonce
+; param2 is given in r23:r22
+;
+; result shall be stored back into last_hash
+.global duco_hash_try_nonce
+duco_hash_try_nonce:
+  ; TODO: epilog
+  movw XL, r24
+  movw ZL, r22
+  
+duco_hash_set_nonce:
+  ldi r20, 40          ; off = 40
+  add XL, r20          ; points to last_hash+1
+  adc XH, r1
+
+1:
+  ld r22, Z+          ; r22 = nonce[i], Z++
+  tst r22              ; Check for null terminator
+  breq append_0x80      ; Exit loop if null
+
+  st X+, r22          ; b[off] = r22, X++
+  inc r20              ; off++
+  rjmp 1b  ; Loop
+
+append_0x80:
+  mov r21, r20 ; total_bytes = offset
+  ldi r22, 0x80        ; r22 = 0x80
+  st X+, r22          ; b[off] = 0x80, X++
+  inc r20              ; off++
+
+2:
+  cpi r20, 62          ; Compare off with 62
+  brsh write_length     ; Exit if off >= 62
+
+  st X+, r1           ; b[off] = 0 (r1 always 0 if cleared at startup)
+  inc r20              ; off++
+  rjmp 2b       ; Loop
+
+write_length:
+  ldi r22, 1           ; r22 = 1
+  st X+, r22          ; b[62] = 1, X++
+
+  lsl r21              ; r20 = off << 1
+  lsl r21              ; r20 << 2
+  lsl r21              ; r20 << 3 (total_bytes * 8)
+  st X, r21           ; b[63] = r20
+
+  ; convert the paddings into hex32
+
+  ; copy tempState into a-e
+
+  ; do sha-1 round from iteration 10-79
+
+  ; add the KTable value into a-e
+
+  ; convert the hex32 back to hex8 into last_hash
+
+duco_hash_try_nonce_epilog:
+  ret
 ;###########################################################
 
 .global sha1
