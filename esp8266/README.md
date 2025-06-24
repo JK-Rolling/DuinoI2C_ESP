@@ -4,7 +4,7 @@
 DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266. Through experiment, it is observed that full featured .bin can run 10 workers while minimal .bin can run 20 workers.
 
 ## Version
-0.29
+0.30
 
 ## Supported Devices
 This project currently supports the following ESP8266 devices:
@@ -12,31 +12,43 @@ This project currently supports the following ESP8266 devices:
 - ESP-01S (min. 1MB)
 - LOLIN(WEMOS) D1 R2 & mini
 - Nodemcu 1.0
+- Generic ESP8266 Module
 
 *Note: Additional devices may be added upon request. Limited to ESP8266 listed in Arduino IDE board manager*
 
 ### Corresponding `.bin` for the ESP8266
-|  | ESP-01S (min. 1MB) | LOLIN(WEMOS) D1 R2 & mini | Nodemcu | Adafruit Feather HUZZAH ESP8266 |
-| :-: | :-: | :-: | :-: | :-: |
-| DuinoI2C_ESP.ino.esp01.bin | ✅ | ❌ | ❌ | ❌ |
-| DuinoI2C_ESP.ino.d1_mini.bin | ❌ | ✅ | ❌ | ❌ |
-| DuinoI2C_ESP.ino.nodemcu.bin | ❌ | ❌ | ✅ | ❌ |
-| DuinoI2C_ESP.ino.adafruit.bin | ❌ | ❌ | ❌ | ✅ |
+|  | ESP-01S (min. 1MB) | LOLIN(WEMOS) D1 R2 & mini | Nodemcu | Adafruit Feather HUZZAH ESP8266 | Generic |
+| :-: | :-: | :-: | :-: | :-: | :-: |
+| DuinoI2C_ESP.ino.esp01.bin | ✅ | ❌ | ❌ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.d1_mini.bin | ❌ | ✅ | ❌ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.nodemcu.bin | ❌ | ❌ | ✅ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.adafruit.bin | ❌ | ❌ | ❌ | ✅ | ❌ |
+| DuinoI2C_ESP.ino.generic.bin | ❌ | ❌ | ❌ | ❌ | ✅ |
 
 > [!IMPORTANT]
 > ESP-01 with 1MB can use all esp01 .bin listed above but only filename with `minimal` can perform 2 stages over-the-air update successfully due to flash size limitation.
 
 ## Feature
-||SERIAL (500Kbps)|WEB_SERIAL|DASHBOARD|I2C_SCL|OLED|CRC8|OTA|mDNS|OLED Piggyback|Dim Worker LED|Breathing LED|Static IP|
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.nodemcu.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.nodemcu.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| DuinoI2C_ESP.ino.adafruit.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ |
+||SERIAL (500Kbps)|WEB_SERIAL|DASHBOARD|I2C_SCL|OTA|mDNS|OLED Piggyback|Dim Worker LED|
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| DuinoI2C_ESP.ino.esp01.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ❌ | ✅ | ❌ | ✅ |
+| DuinoI2C_ESP.ino.d1_mini.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ✅ | ✅ |
+| DuinoI2C_ESP.ino.nodemcu.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ |
+| DuinoI2C_ESP.ino.generic.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ |
+| DuinoI2C_ESP.ino.adafruit.bin | ✅ | ✅ | ✅ | 100KHz/400KHz | ✅ | ✅ | ❌ | ✅ |
+| DuinoI2C_ESP.ino.esp01.minimal.bin.gz | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ❌ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.d1_mini.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ❌ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.nodemcu.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ❌ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.generic.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ❌ | ❌ | ❌ |
+| DuinoI2C_ESP.ino.adafruit.minimal.bin | ❌ | ❌ | ❌ | 100KHz/400KHz | ✅ | ❌ | ❌ | ❌ |
+
+All .bin supports 
+* User configurable I2C GPIO
+* OLED
+* OLED rotation from WiFi Manager page
+* Breathing onboard LED
+* Static IP
+* CRC8
 
 
 *Note: Contact me in official Duino-Coin [discord](https://discord.gg/duino-coin-677615191793467402) for custom feature combination or place your request in [discussion](https://github.com/JK-Rolling/DuinoI2C_ESP/discussions/2)*
@@ -97,10 +109,13 @@ Usually default setting will work out-of-the-box. Refer table below for details.
 |---|---|
 |Board Name|set mDNS to not memorize IP address. e.g. http://d1mini.local/. Except for `minimal`|
 |I2C Frequency|ESP I2C Frequency|
+|I2C SDA GPIO|ESP I2C SDA for OLED and workers|
+|I2C SCL GPIO|ESP I2C SCL for OLED and workers|
 |Job Difficulty|Choose the right diff so first few shares will not be rejected. `ARM` for RPi Pico|
 |Group Workers|Choose yes to combine workers into threads in webwallet|
 |LED GPIO|Refer to your ESP pinout for external LED|
 |OLED Piggyback|Only for D1 mini. Make sure to choose the right one! Serial will not work here|
+|Rotate OLED|Rotate OLED content by 180°|
 |Host Version|Worker version reported to server|
 |Static IP|Set to assign ESP a static IP address|
 
@@ -110,21 +125,32 @@ DuinoI2C_ESP web dashboard allow user to access the following
 * Firmware WiFi Update (FWU or OTA) with security
 * Onboard LED power
 * Worker LED brightness
-* OLED power and brightness
+* OLED power, brightness, and reset
 * ESP Restart
 
 *ESP01 opted `minimal` will only have FWU only*
 
+**Light Mode**
+
 <img src="assets/ui01.png" alt="ui01" width="50%">
+
+**Dark Mode**
+
+<img src="assets/ui16.png" alt="ui16" width="50%">
+
+**Web Serial**
+
 <img src="assets/ui02.png" alt="ui02" width="50%">
 
 minimal.bin lacks web UI to control some feature but they can still be controlled by accessing the endpoint directly.
 |Feature|Endpoint|
 |---|---|
-|onboard LED|http://\<ipaddr\>/led_toggle|
-|OLED|http://\<ipaddr\>/oled_toggle|
+|onboard LED on/off|http://\<ipaddr\>/led_toggle|
+|OLED on/off|http://\<ipaddr\>/oled_toggle|
+|OLED Reset|http://\<ipaddr\>/oled_reset|
 |ESP restart|http://\<ipaddr\>/restart|
 |FW version|http://\<ipaddr\>/GET_VER|
+|IP address|http://\<ipaddr\>/GET_IP|
 
 ## Update DuinoI2C_ESP
 DuinoI2C_ESP may be updated using USB/USB2Serial or OTA for wireless. Most of ESP8266 comes with 4MB onboard flash so both approach will work. ESP01 of 1MB however, need 2 steps approach for OTA.
@@ -181,8 +207,8 @@ Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto 
 |:-:| :----: | :----: | :----: |:-----: |
 || 3.3V | 3.3V | <---> | Vcc |
 || GND | GND | <---> | GND |
-|`SCL`|D1 (GPIO5) | GPIO2 | <---> | SCL |
-|`SDA`|D2 (GPIO4) | GPIO0 | <---> | SDA |
+|`SCL`| User SCL | GPIO2 | <---> | SCL |
+|`SDA`| User SDA | GPIO0 | <---> | SDA |
 
 For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini to source the power from the ESP serial pins, you may connect them by refering to the table below. Take note that `Serial` will be disabled in this use case. Also note that upload via USB/USB-Serial will not work if OLED VCC/GND is connected to RX/TX pin. Disconnect OLED to enable cable upload. If disconnecting OLED is not an option, use FWU instead.
 ### Connection Pinout (Powered from TX RX Pin)
@@ -236,3 +262,4 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 |7|Web dashboard button not working|ESP is too far from router or the power supply is too weak|bring the ESP closer to the wifi router and make sure to use a good PSU. add capacitor for ESP-01s|
 |8|Seeing `-USER BANNED-` message|The username supplied is banned|Contact [duinocoin.com](https://duinocoin.com/contact) for more info|
 |9|OTA progress bar stuck|ESP ran out of heap memory|Reset the ESP and redo the OTA as soon as ESP WiFi connection is established|
+|10|OLED display corrupted|Possibly OLED I2C payload is corrupted when attempting to set the orientation|Visit the ESP dashboard and click on Reset OLED button|
