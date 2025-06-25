@@ -105,6 +105,10 @@ After flashing and powering on your ESP8266 for the first time, it will create a
 
 ### Advanced Settings
 Usually default setting will work out-of-the-box. Refer table below for details.
+
+> [!IMPORTANT]
+> WiFi Manager Config Page will not check for GPIO conflicts. Modify advanced settings only if you know what you're doing.
+
 |Field|Description|
 |---|---|
 |Board Name|set mDNS to not memorize IP address. e.g. http://d1mini.local/. Except for `minimal`|
