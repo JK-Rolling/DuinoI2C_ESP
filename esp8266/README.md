@@ -4,7 +4,7 @@
 DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266. Through experiment, it is observed that full featured .bin can run 10 workers while minimal .bin can run 20 workers.
 
 ## Version
-0.31
+0.32
 
 ## Supported Devices
 This project currently supports the following ESP8266 devices:
@@ -94,10 +94,13 @@ Refer to [ESPGUITOOL](https://github.com/CGameDev/ESPGUITOOL/releases). Thanks C
 ## Configure DuinoI2C_ESP
 After flashing and powering on your ESP8266 for the first time, it will create a soft access point and launch a WiFi Manager web interface, allowing the user to configure it for proper operation. Note that ESP8266 will only work with 2.4GHz WiFi so the WiFi router may need to enable 2.4GHz if not done so already.
 
+> [!IMPORTANT]
+> Change the default DuinoI2C AP password immediately to prevent potential security risk
+
 ### Connecting to the WiFi Manager
 1. Connect your computer or phone to the WiFi network hosted by the ESP8266. You may connect the WiFi network `DuinoI2C_ESP` and key in password as `password` manually or use QR scanner to skip the typing if OLED is connected to the ESP. Or just scan the QR below in this page.
 2. Open a web browser and navigate to http://192.168.4.1 by typing in the browser or use QR scanner to skip the typing if OLED is connected to the ESP.
-3. The web interface will allow you to configure your WiFi credentials, Duino username and mining key, optionally the firmware OTA credential (FWU - Firmware WiFi Update), and optionally configure static IP address.
+3. The web interface will allow you to configure your WiFi credentials, Duino username and mining key, DuinoI2C AP password, optionally the firmware OTA credential (FWU - Firmware WiFi Update), and optionally configure static IP address.
 4. Click on Save button to store the inputs in ESP8266. The ESP should restart automatically and start working!
 
 
@@ -267,3 +270,5 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 |8|Seeing `-USER BANNED-` message|The username supplied is banned|Contact [duinocoin.com](https://duinocoin.com/contact) for more info|
 |9|OTA progress bar stuck|ESP ran out of heap memory|Reset the ESP and redo the OTA as soon as ESP WiFi connection is established|
 |10|OLED display corrupted|Possibly OLED I2C payload is corrupted when attempting to set the orientation|Visit the ESP dashboard and click on Reset OLED button|
+|11|Blank OLED during boot|The OLED initialization was not captured by the OLED|Visit the ESP web dashboard and click on `Reset OLED` button|
+|12|User forgot DuinoI2C AP password|time made user forgets|Get the password from OLED when ESP failed to connect WiFi. Or gets it from Serial monitor with USB cable connected to computer|
