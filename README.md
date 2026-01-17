@@ -5,7 +5,7 @@ This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and
 1. **High share rate**. The DUCO earning highly dependent on number of share found and submitted. Higher share rate means higher earning!
 2. **More workers**. Up to 20 workers* without significant impact on the share rate!
 3. **Portability**. DuinoI2C_ESP allow up to 2 WiFi credential to be stored. So no more worries if you're moving the mining rig between 2 places.
-4. **View live stats on OLED**. DuinoI2C_ESP provides mining statistic summary and detailed worker status, right from the OLED.
+4. **View live stats on OLED/LCD**. DuinoI2C_ESP provides mining statistic summary and detailed worker status, right from the OLED/LCD.
 5. **View live stats on web serial**. Detailed info like share acceptance, share rate, ping time will scroll up non-stop during normal operation.
 6. **Firmware update via WiFi**. After loading DuinoI2C_ESP via cable the first time, subsequent update can be done over WiFi. Bye cable!
 7. **Breathing LED**. Onboard LED will indicate if the ESP is running happily.
