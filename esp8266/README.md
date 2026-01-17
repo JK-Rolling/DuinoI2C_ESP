@@ -4,7 +4,7 @@
 DuinoI2C_ESP is a project designed to run in ESP8266. It'll act as a host to get jobs from Duino-Coin server, then distribute jobs to AVR workers via I2C. DuinoI2C_ESP provides a pre-compiled `.bin` file that you can easily download and upload to your ESP8266. Through experiment, it is observed that full featured .bin can run 10 workers while minimal .bin can run 20 workers.
 
 ## Version
-0.32
+0.33
 
 ## Supported Devices
 This project currently supports the following ESP8266 devices:
@@ -44,7 +44,7 @@ This project currently supports the following ESP8266 devices:
 
 All .bin supports 
 * User configurable I2C GPIO
-* OLED
+* OLED / LCD 16x2
 * OLED rotation from WiFi Manager page
 * Breathing onboard LED
 * Static IP
@@ -116,8 +116,8 @@ Usually default setting will work out-of-the-box. Refer table below for details.
 |---|---|
 |Board Name|set mDNS to not memorize IP address. e.g. http://d1mini.local/. Except for `minimal`|
 |I2C Frequency|ESP I2C Frequency|
-|I2C SDA GPIO|ESP I2C SDA for OLED and workers|
-|I2C SCL GPIO|ESP I2C SCL for OLED and workers|
+|I2C SDA GPIO|ESP I2C SDA for OLED/LCD and workers|
+|I2C SCL GPIO|ESP I2C SCL for OLED/LCD and workers|
 |Job Difficulty|Choose the right diff so first few shares will not be rejected. `ARM` for RPi Pico|
 |Group Workers|Choose yes to combine workers into threads in webwallet|
 |LED GPIO|Refer to your ESP pinout for external LED|
@@ -132,7 +132,7 @@ DuinoI2C_ESP web dashboard allow user to access the following
 * Firmware WiFi Update (FWU or OTA) with security
 * Onboard LED power
 * Worker LED brightness
-* OLED power, brightness, and reset
+* OLED/LCD power, brightness, and reset
 * ESP Restart
 
 *ESP01 opted `minimal` will only have FWU only*
@@ -153,7 +153,7 @@ minimal.bin lacks web UI to control some feature but they can still be controlle
 |Feature|Endpoint|
 |---|---|
 |onboard LED on/off|http://\<ipaddr\>/led_toggle|
-|OLED on/off|http://\<ipaddr\>/oled_toggle|
+|OLED/LCD on/off|http://\<ipaddr\>/oled_toggle|
 |OLED Reset|http://\<ipaddr\>/oled_reset|
 |ESP restart|http://\<ipaddr\>/restart|
 |FW version|http://\<ipaddr\>/GET_VER|
@@ -190,8 +190,10 @@ The OTA update can be automated using script or command line from Linux terminal
 
 `curl -u admin:admin -F "image=@firmware.bin" http://192.168.0.219/firmware`
 
-## OLED (Optional)
+## OLED / LCD (Optional)
 Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto detected at address 0x3C. If the mining rig setup is using logic-level-shifter, it is recommended to connect the OLED to 3.3V side for both VCC and I2C SDA/SCL.
+
+16x2 LCD or Dot Matrix Liquid Crystal Display is supported. The LCD will be auto detected at address 0x27. Depending on the operating voltage of the LCD, for 5V LCD, the LCD I2C shall use logic-level-shifter HV side. For 3v3 LCD, the LCD I2C can be connected directly to the ESP I2C.
 
 ### System Info Page
 <img src="assets/ui15.jpg" alt="ui15" width="20%">
@@ -209,13 +211,17 @@ Only SSD1306 or compatible 128x64 OLED will be supported. The OLED will be auto 
 |MAC|MAC address of the ESP8266|
 |URL|Shorten URL to access this [DuinoI2C_ESP](https://github.com/JK-Rolling/DuinoI2C_ESP)|
 
-### Connection Pinout (Powered from 3.3V)
-|| ESP8266 | ESP01 || OLED |
-|:-:| :----: | :----: | :----: |:-----: |
-|| 3.3V | 3.3V | <---> | Vcc |
-|| GND | GND | <---> | GND |
-|`SCL`| User SCL | GPIO2 | <---> | SCL |
-|`SDA`| User SDA | GPIO0 | <---> | SDA |
+### Connection Pinout
+> [!IMPORTANT]
+> Choose only 1 (One) voltage source for ESP8266, either 3.3V or 5V. ESP01 will work with 3.3V only.
+
+|| ESP8266 | ESP01 || OLED/LCD(3v3) | LCD(5V) |
+|:-:| :----: | :----: | :----: |:-----: | :-----: |
+|5V| 5V/Vin/Vcc |-||-|Vdd|
+|3.3V| 3V3 | Vcc | <---> | Vcc/Vdd |-|
+|GND| GND | GND | <---> | GND/Vss | Vss|
+|`SCL`| User SCL | GPIO2 | <---> | SCL |SCK|
+|`SDA`| User SDA | GPIO0 | <---> | SDA |SDA|
 
 For mining rig that intend to put the OLED on top of lolin wemos D1 R2 and mini to source the power from the ESP serial pins, you may connect them by refering to the table below. Take note that `Serial` will be disabled in this use case. Also note that upload via USB/USB-Serial will not work if OLED VCC/GND is connected to RX/TX pin. Disconnect OLED to enable cable upload. If disconnecting OLED is not an option, use FWU instead.
 ### Connection Pinout (Powered from TX RX Pin)
@@ -250,7 +256,7 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 ### BKM (Best Known Method)
 - Tested stable operation for 15 workers. Beyond that and up until 20, may need your help to find out as I ran out of AVR. Use `minimal` .bin may help.
 - Keep an eye on the free heap as it may cause instability if too low. The firmware tried it's best to keep heap space available.
-- Turn off OLED from the web dashboard as updating screen means taking away 1-3% sharetime from one of the worker. Turn it back ON when needed, it saves power too.
+- Turn off OLED/LCD from the web dashboard as updating screen means taking away 1-3% sharetime from one of the worker. Turn it back ON when needed, it saves power too.
 - Valid worker address range is 1-127 except 60 (0x3C). Only the first 20 workers will be used.
 - if the breathing LED hung, give it 1 minutes. If it doesn't continue breathing, reset the ESP.
 - Best ESP-worker combination per experiment is ESP 100KHz and Attiny85 400KHz. The KHz here refers to I2C clock frequency. This combo submit **8.6%** more accepted shares than ESP 100KHz and Attiny85 100KHz combo. Thanks jpx13 for collecting this data!
@@ -261,7 +267,7 @@ stripe.com :point_right:<img src="assets/qr_9AQdRm2dO50e6fmcMO.png" alt="stripe_
 ||Issue|Theory|Comment|
 |:-:|:-:|:-:|:-:|
 |1|Missing worker|When number of workers are more than 10, each worker due to it's inaccurate oscillator frequency, may WDT reset itself at different interval after power on. During the reset cycle, it may not respond to ESP I2C scanning, thus ESP will assume no worker exist.|Press the ESP reset button, check all worker are detected, if not, repeat. Potential fix in future is to increase scan iteration and add delay between scan, but this will hinder the boot speed|
-|2|Black OLED screen after FWU|Non-issue|FWU usually takes around 15 seconds to reboot once new firmware is received|
+|2|Blank OLED screen after FWU|Non-issue|FWU usually takes around 15 seconds to reboot once new firmware is received|
 |3|Discontinuity in webserial share count print|The free heap is running too low|Non-essential task, in this case webserial print is suspended. It'll auto resume once the free heap is back to healthy level|
 |4|Frequent worker restart|Likely due to too many workers causing the ESP to ran out of heap memory|Either reduce worker count or redistribute workers to other ESP. Avoid using webserial|
 |5|Worker not detected|Something went wrong in the I2C bus or worker|Load [i2c_scanner](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266/utils/utils/i2c_scanner) into ESP to check the I2C bus and worker health|
