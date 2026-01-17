@@ -23,13 +23,13 @@ This project is designed to mine Duino-Coin using an ESP8622 as a I2C master and
 *GIF edited to 1 second/screen, no speed up*
 
 ### Connection Pinouts
-|| ESP8266 | ESP01 | OLED | Logic Level Converter | Arduino | ATTiny85 | Pico |
-|:-:| :----: | :----: | :--: | :-----: | :-----: | :-----: | :-----: |
-|3.3V|3.3V | 3.3V | VCC | <---> | 5V | 5V | Vsys |
-|5V|||| <---> | 5V | 5V | Vsys |
-|GND|GND | GND | GND | <---> | GND | GND | GND |
-|`SCL`|D1 (GPIO5) | GPIO2 | SCL | <---> | A5 | PB2 | GP27 & GP21 (no LLC needed)|
-|`SDA`|D2 (GPIO4) | GPIO0 | SDA | <---> | A4 | PB0 | GP26 & GPP20 (no LLC needed)|
+|| ESP8266 | ESP01 | OLED | LCD(3v3) | Pico | Logic Level Converter | Arduino | ATTiny85 | Pico | LCD(5V) |
+|:-:| :----: | :----: | :--: | :--: | :---: | :-----: | :-----: | :-----: | :-----: | :---: |
+|3.3V|3.3V | 3.3V | VCC | VDD || LV<--->HV | 5V | 5V || |
+|5V|||||| LV<--->HV | 5V | 5V | Vsys |VDD|
+|GND|GND | GND | GND | GND |GND| LV<--->HV | GND | GND | GND | GND |
+|`SCL`|D1 (GPIO5) | GPIO2 | SCL | SCK |GP27 & GP21| LV<--->HV | A5 | PB2 | |SCK|
+|`SDA`|D2 (GPIO4) | GPIO0 | SDA | SDA |GP26 & GPP20| LV<--->HV | A4 | PB0 | |SDA|
 
 ## ESP8266 Setup
 See [esp8266](https://github.com/JK-Rolling/DuinoI2C_ESP/tree/main/esp8266) section of this repository.
