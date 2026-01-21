@@ -16,10 +16,10 @@ Worker is only responsible to receive job from ESP, find the result, and return 
 
 ## Library Dependency
 * [ArduinoUniqueID](https://github.com/ricaun/ArduinoUniqueID) (Handle the chip ID)
-* [StreamJoin](https://github.com/ricaun/StreamJoin) (For Pico)
 
 ## Arduino IDE
 Recommended version: 1.8.19
+### Using another Version of Arduino IDE might not work!
 
 ## Arduino Uno/Nano/Pro - Tiny_Slave
 Arduino ATmega168/328 shall use `DuinoCoinI2C_Tiny_Slave` sketch. Logic-Level-Converter (LLC) is required if Arduino is operating at 5V and master at 3.3V.
