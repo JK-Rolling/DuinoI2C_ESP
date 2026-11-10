@@ -20,7 +20,7 @@
  #include <Wire.h>
  #include "duco_hash.h"
  
- #define BUFFER_MAX 90
+ #define BUFFER_MAX 104
  #define HASH_BUFFER_SIZE 20
  #define CHAR_END '\n'
  #define CHAR_DOT ','
@@ -237,7 +237,7 @@
    
      bool doJob()
      {
-       uint16_t job = 1;
+       uint32_t job = 1;
        #if CRC8_EN
          // calculate crc8
          char *delim_ptr = strchr(coreBuffer, CHAR_DOT);
@@ -262,13 +262,13 @@
        uint32_t elapsedTime = millis() - startTime;
        
        memset(coreBuffer, 0, sizeof(coreBuffer));
-       char cstr[6];
+       char cstr[11]; // enough for uint32 decimal + NUL
        // Job
        if (job == 0) {
          strcpy(cstr,"#"); // re-request job
        }
        else
-         itoa(job, cstr, 10);
+         ultoa(job, cstr, 10);
        strcpy(coreBuffer, cstr);
        coreBuffer[strlen(coreBuffer)] = CHAR_DOT;
      
@@ -315,7 +315,7 @@
        return true;
      }
      
-     int work()
+     uint32_t work()
      {
        // tokenize
        const char *delim = ",";
@@ -341,7 +341,7 @@
        duco_hash_state_t hash;
        duco_hash_init(&hash, lastblockhash);
      
-       char nonceStr[10 + 1];
+       char nonceStr[15 + 1];
        int nonce_max = difficulty*100+1;
        for (int nonce = 0; nonce < nonce_max; nonce++) {
          ultoa(nonce, nonceStr, 10);
