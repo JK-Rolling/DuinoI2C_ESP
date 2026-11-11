@@ -69,7 +69,7 @@ miniTiny :point_up_2:
 
 miniNano :point_up_2:
 
-## Share rate per Pico worker
+## Share rate per Pico worker (Based on Result prior Oct-2026)
 Based on actual data on RP2040 worker. Job diff 128, Hashrate 4.3KH/s, Ping time 140ms. Measurement taken from average share rate since first share submission.
 
 The graph shows a share rate of around 0.55 shares/worker from 2 to 20 workers. No significant drop in share rate when more workers are added. This also indicates the share rate will only increase if the ping time is lower.
